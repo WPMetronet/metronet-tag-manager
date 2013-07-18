@@ -21,4 +21,4 @@ Please refer to the <a href="http://www.google.com/tagmanager/faq.html">Google T
 
 Please refer to the <a href="https://developers.google.com/tag-manager/reference">Google Tag Manager API</a> reference.
 
-###get_log_values###
+###What are dataLayer variables used for?###
