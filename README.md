@@ -1,4 +1,4 @@
-Metronet Tag Manager
+Metronet Tag Manager for WordPress
 ====================
 
 Integrate Google Tag Manager into your website.  Use dataLayer variables on a per-post and per-page basis.  Use variables for flexibility.
