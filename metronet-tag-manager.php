@@ -227,7 +227,7 @@ class Metronet_Tag_Manager {
 	
 	//Initializes the post meta box
 	public function meta_box_init( $post_type ) {
-		add_meta_box( 'metronet_tag_manager', 'Metronet Tag Manager', array( $this, 'meta_box_settings' ), $post_type, 'normal', 'default' );
+		add_meta_box( 'metronet_tag_manager', 'Google Tag Manager DataLayer variables', array( $this, 'meta_box_settings' ), $post_type, 'normal', 'default' );
 	} //end meta_box_init
 	
 	//Save meta box options
