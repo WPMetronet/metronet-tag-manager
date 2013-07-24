@@ -25,7 +25,9 @@
 
 			// Declare dataLayer array within content_ifr iFrame to capture onclick event
 			ed.onPostRender.add(function(ed, cm) {
-				content_ifr['dataLayer'] = [];
+				if ( typeof( content_ifr ) != "undefined" ) {
+					content_ifr['dataLayer'] = [];
+				}
 			});
 		},
 
