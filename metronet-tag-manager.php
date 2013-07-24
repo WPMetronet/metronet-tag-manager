@@ -65,8 +65,10 @@ class Metronet_Tag_Manager {
 	public function filter_post_title( $total_match, $match, $post_id ) {
 		return get_the_title( $post_id );
 	} //end filter_post_title
-	public function filter_author_name( $total_match, $match, $post_id ) {
-		return get_the_author();
+	public function filter_author_name( $total_match, $match, $post_id ) {	
+		$author_id = get_post_field( 'post_author', $post_id );
+		$display_name = get_the_author_meta( 'display_name', $author_id );
+		return $display_name;
 	} //end filter_author_name
 	public function filter_wordcount( $total_match, $match, $post_id ) {
 		$post_content = get_post_field( 'post_content', $post_id );
@@ -254,7 +256,7 @@ class Metronet_Tag_Manager {
 		$variable_array = array();
 		if ( isset( $_POST[ 'tag_manager' ] ) && !empty( $_POST[ 'tag_manager' ] ) ) {
 			foreach( $_POST[ 'tag_manager' ] as $variable ) {
-				$name = sanitize_title( $variable[ 'name' ] );
+				$name = $this->sanitize_variable_name( $variable[ 'name' ] );
 				$value = sanitize_text_field( $variable[ 'value' ] );
 				$variable_array[] = array(
 					'name' => $name,
@@ -310,7 +312,7 @@ class Metronet_Tag_Manager {
 		foreach( $data_layer_array as &$value ) {
 			$value = preg_replace_callback( "|%([^%]*)%|", array( $this, 'variable_replace' ), $value );
 		}
-		printf( 'var dataLayer = [%s];', json_encode( $data_layer_array ) );
+		printf( 'dataLayer = [%s];', json_encode( $data_layer_array ) );
 		echo "\n";
 		echo '</script>' . "\n";
 		
@@ -338,12 +340,8 @@ class Metronet_Tag_Manager {
 	//A RegEx callback for tag manager variables in the format of %variable_value%.
 	//This ensures a valid callback and filtering mechanism that can overwrite variable values.
 	public function variable_replace( $matches ) {
-		global $post;
-		if ( is_object( $post ) ) {
-			$post_id = $post->ID;
-		} else {
-			$post_id = 0;
-		}
+		$post_id = get_queried_object_id();
+
 		//Retrieves a variable like %post_title% and does apply_filters( 'gtm_post_title', '%post_title%', 'post_title', post_id );
 		return apply_filters( 'gtm_' . $matches[1], $matches[0], $matches[1], $post_id ); 
 	}
@@ -384,20 +382,6 @@ class Metronet_Tag_Manager {
 		) );
 	} //end print_scripts_settings
 	
-	//Saves settings for admin users
-	private function save_admin_options( $admin_options = false ){
-		if ( !empty( $this->admin_options ) ) {
-			if ( is_array( $admin_options ) ) {
-				$this->admin_options = $admin_options;
-			}
-			if ( $this->is_multisite() ) {
-				update_site_option( 'metronet_tag_manager', $this->admin_options);
-			} else {
-				update_option( 'metronet_tag_manager', $this->admin_options );
-			}
-		}
-	} //end save_admin_options
-	
 	/**
 	* safe_css
 	* 
@@ -413,12 +397,86 @@ class Metronet_Tag_Manager {
 	} //end safe_css
 	
 	/**
+	* sanitize_variable_name
+	* 
+	* Makes sure a variable name is stripped of spaces and converted for use
+	*
+	* @param string $var - A variable to be sanitized
+	* @returns array $var - A formatted variable
+	**/
+	private function sanitize_variable_name( $var ) {
+		
+		$var = remove_accents($var);
+		//Code ripped from sanitize_title_with_dashes
+		$var = strip_tags($var);
+	// Preserve escaped octets.
+		$var = preg_replace('|%([a-fA-F0-9][a-fA-F0-9])|', '---$1---', $var);
+		// Remove percent signs that are not part of an octet.
+		$var = str_replace('%', '', $var);
+		// Restore octets.
+		$var = preg_replace('|---([a-fA-F0-9][a-fA-F0-9])---|', '%$1', $var);
+	
+		if (seems_utf8($var)) {
+			$var = utf8_uri_encode($var, 200);
+		}
+	
+		$var = preg_replace('/&.+?;/', '', $var); // kill entities
+		$var = str_replace('.', '-', $var);
+	
+		// Convert nbsp, ndash and mdash to hyphens
+		$var = str_replace( array( '%c2%a0', '%e2%80%93', '%e2%80%94' ), '-', $var );
+
+		// Strip these characters entirely
+		$var = str_replace( array(
+			// iexcl and iquest
+			'%c2%a1', '%c2%bf',
+			// angle quotes
+			'%c2%ab', '%c2%bb', '%e2%80%b9', '%e2%80%ba',
+			// curly quotes
+			'%e2%80%98', '%e2%80%99', '%e2%80%9c', '%e2%80%9d',
+			'%e2%80%9a', '%e2%80%9b', '%e2%80%9e', '%e2%80%9f',
+			// copy, reg, deg, hellip and trade
+			'%c2%a9', '%c2%ae', '%c2%b0', '%e2%80%a6', '%e2%84%a2',
+			// grave accent, acute accent, macron, caron
+			'%cc%80', '%cc%81', '%cc%84', '%cc%8c',
+		), '', $var );
+
+		// Convert times to x
+		$var = str_replace( '%c3%97', 'x', $var );
+	
+		$var = preg_replace('/[^%a-zA-Z0-9 _-]/', '', $var);
+		$var = preg_replace('/\s+/', '-', $var);
+		$var = preg_replace('|-+|', '-', $var);
+		$var = trim($var, '-');
+	
+		return $var;
+	} //end sanitize_variable_name
+	
+	//Saves settings for admin users
+	private function save_admin_options( $admin_options = false ){
+		if ( !empty( $this->admin_options ) ) {
+			if ( is_array( $admin_options ) ) {
+				$this->admin_options = $admin_options;
+			}
+			if ( $this->is_multisite() ) {
+				update_site_option( 'metronet_tag_manager', $this->admin_options);
+			} else {
+				update_option( 'metronet_tag_manager', $this->admin_options );
+			}
+		}
+	} //end save_admin_options
+	
+	
+	
+	/**
 	* settings_page()
 	* 
 	* Output the settings page for the plugin
 	*
 	*/
 	public function settings_page() {
+		
+		//Handle saving of data
 		if ( isset( $_POST[ 'reset' ] ) || isset( $_POST[ 'submit' ] ) ) {
 			if ( !wp_verify_nonce( $_REQUEST[ '_metronet' ], 'save_metronet_settings_tags' ) ) {
 				echo sprintf( '<div class="error"><p><strong>%s</strong></p></div>', __( 'This request cannot be verified', 'metronet_tag_manager' ) );
@@ -455,7 +513,7 @@ class Metronet_Tag_Manager {
 			$variable_array = array();
 			if ( isset( $_POST[ 'tag_manager' ] ) && !empty( $_POST[ 'tag_manager' ] ) ) {
 				foreach( $_POST[ 'tag_manager' ] as $variable ) {
-					$name = sanitize_title( $variable[ 'name' ] );
+					$name = $this->sanitize_variable_name( $variable[ 'name' ] );
 					$value = sanitize_text_field( $variable[ 'value' ] );
 					$variable_array[] = array(
 						'name' => $name,
@@ -469,7 +527,7 @@ class Metronet_Tag_Manager {
 			$external_variable_array = array();
 			if ( isset( $_POST[ 'external_tag_manager' ] ) && !empty( $_POST[ 'external_tag_manager' ] ) ) {
 				foreach( $_POST[ 'external_tag_manager' ] as $variable ) {
-					$name = sanitize_title( $variable[ 'name' ] );
+					$name = $this->sanitize_variable_name( $variable[ 'name' ] );
 					$value = sanitize_text_field( $variable[ 'value' ] );
 					$external_variable_array[] = array(
 						'name' => $name,
@@ -491,6 +549,16 @@ class Metronet_Tag_Manager {
 		<input type="hidden" name="action" value="save" />
 		<?php wp_nonce_field( 'save_metronet_settings_tags', '_metronet' ); ?>
 		<h2>Metronet Tag Manager</h2>
+		<?php
+		//Show the body error message (dismissable).
+		global $current_user;
+		$user_id = $current_user->ID;
+		if ( !get_user_meta( $user_id, 'gtm_body_notice', true ) ) {
+			echo '<div class="updated"><p>';
+			esc_html_e( "Google recommends that the Google Tag Manager script is loaded straight after the opening <body> tag. For this to work, you will need to add the following piece of code into your template file just after the <body> tag: <?php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at the bottom of your site and might not track the way you want it to.", 'metronet_tag_manager' );
+			echo '</p></div>';
+		}
+		?>
 		<table class="form-table">
 			<tr valign="top">
 				<th scope="row"><?php esc_html_e( 'Google Tag Manager Code', 'metronet_tag_manager' ); ?></th>
