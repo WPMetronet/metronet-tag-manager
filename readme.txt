@@ -40,10 +40,17 @@ Please refer to the <a href="https://developers.google.com/tag-manager/reference
 
 == Changelog ==
 
+= 1.0.1 =
+* Released 2012-07-24
+* Fixing TinyMCE JavaScript issue
+
 = 1.0 =
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Fixing TinyMCE JavaScript bug.
 
 = 1.0 =
 Initial Release
