@@ -1,0 +1,165 @@
+# Copyright (C) 2014 Metronet Tag Manager
+# This file is distributed under the same license as the Metronet Tag Manager package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Metronet Tag Manager 1.0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/metronet-tag-manager\n"
+"POT-Creation-Date: 2014-07-09 09:29:14+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: metronet-tag-manager.php:47 metronet-tag-manager.php:54
+msgid "Settings"
+msgstr ""
+
+#: metronet-tag-manager.php:369
+msgid "Name: "
+msgstr ""
+
+#: metronet-tag-manager.php:370
+msgid "Value: "
+msgstr ""
+
+#: metronet-tag-manager.php:370 metronet-tag-manager.php:389
+msgid "Delete"
+msgstr ""
+
+#: metronet-tag-manager.php:387
+msgid "Name"
+msgstr ""
+
+#: metronet-tag-manager.php:388 tinyMCE/addparams.php:70
+msgid "Value"
+msgstr ""
+
+#: metronet-tag-manager.php:491
+msgid "This request cannot be verified"
+msgstr ""
+
+#: metronet-tag-manager.php:494
+msgid "Settings saved"
+msgstr ""
+
+#: metronet-tag-manager.php:567
+msgid ""
+"Google recommends that the Google Tag Manager script is loaded straight "
+"after the opening <body> tag. For this to work, you will need to add the "
+"following piece of code into your template file just after the <body> tag: <?"
+"php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at "
+"the bottom of your site and might not track the way you want it to."
+msgstr ""
+
+#: metronet-tag-manager.php:573
+msgid "Google Tag Manager Code"
+msgstr ""
+
+#: metronet-tag-manager.php:575
+msgid ""
+"You can view your Container Snippet by logging into Google Tag Manager, "
+"clicking \"Users & Settings\", and clicking on \"Settings\"."
+msgstr ""
+
+#: metronet-tag-manager.php:576
+msgid "Paste your Google Tag Manager code here:"
+msgstr ""
+
+#: metronet-tag-manager.php:581
+msgid "Post/Page Variables"
+msgstr ""
+
+#: metronet-tag-manager.php:583
+msgid ""
+"Add global variables and set defaults to show on posts, pages, and custom "
+"post types.  You can configure or overwrite these on a per-post basis by "
+"viewing a post."
+msgstr ""
+
+#: metronet-tag-manager.php:589
+msgid "External Variables"
+msgstr ""
+
+#: metronet-tag-manager.php:591
+msgid ""
+"Add global variables that will show on all pages except posts, pages, or "
+"custom post types."
+msgstr ""
+
+#: metronet-tag-manager.php:597
+msgid "Reset to Defaults"
+msgstr ""
+
+#: metronet-tag-manager.php:597
+msgid "Save Changes"
+msgstr ""
+
+#: tinyMCE/addparams.php:20
+msgid "Description"
+msgstr ""
+
+#: tinyMCE/addparams.php:28
+msgid "Title"
+msgstr ""
+
+#: tinyMCE/addparams.php:36
+msgid "URL"
+msgstr ""
+
+#: tinyMCE/addparams.php:45
+msgid "Id"
+msgstr ""
+
+#: tinyMCE/addparams.php:46
+msgid "Class"
+msgstr ""
+
+#: tinyMCE/addparams.php:55
+msgid "Target"
+msgstr ""
+
+#: tinyMCE/addparams.php:60
+msgid "Open in new tab/window"
+msgstr ""
+
+#: tinyMCE/addparams.php:64
+msgid "Data Layers"
+msgstr ""
+
+#: tinyMCE/addparams.php:69
+msgid "Parameter"
+msgstr ""
+
+#: tinyMCE/addparams.php:79
+msgid "Add"
+msgstr ""
+
+#: tinyMCE/addparams.php:82
+msgid "Save"
+msgstr ""
+
+#: tinyMCE/addparams.php:83
+msgid "Cancel"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Metronet Tag Manager"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/metronet-tag-manager/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Add Google Tag Manager tracking and declare Data Layer variables"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Metronet"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.metronet.no"
+msgstr ""

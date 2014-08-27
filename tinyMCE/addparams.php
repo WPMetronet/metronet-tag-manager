@@ -1,10 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Metronet Google Tag Manager</title>
+	<title>Metronet Tag Manager</title>
 	<?php
 	//Register Scripts
 	wp_register_script( 'tiny_mce_popup', includes_url( '/js/tinymce/tiny_mce_popup.js' ), array( 'jquery-ui-core', 'jquery-ui-dialog' ) );
-	wp_register_script( 'MTM_tiny_mce', plugins_url( 'addparams.js', __FILE__ ), array( 'tiny_mce_popup' ), '20120718' );
+	wp_register_script( 'MTM_tiny_mce', plugins_url( 'addparams.js', __FILE__ ), array( 'tiny_mce_popup' ), 'v2' );
 	
 	//Register Styles
 	wp_register_style( 'jquery-ui', plugins_url( '/css/jquery-ui.css', __FILE__ ) );
@@ -17,7 +17,7 @@
 	<form name="source" onsubmit="return AddParams.insert();" action="#" id="data">
 
 		<div class="row">
-			<p>Description</p>
+			<p><?php _e( 'Description', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
@@ -25,7 +25,7 @@
 		<div>
 
 		<div class="row">
-			<p>Title</p>
+			<p><?php _e( 'Title', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
@@ -33,7 +33,7 @@
 		<div>
 
 		<div class="row">
-			<p>URL</p>
+			<p><?php _e( 'URL', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
@@ -42,8 +42,8 @@
 		</div>
 
 		<div class="row">
-			<p>Id</p>
-			<p>Class</p>
+			<p><?php _e( 'Id', 'metronet-tag-manager' ); ?></p>
+			<p><?php _e( 'Class', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
@@ -52,22 +52,22 @@
 		</div>
 
 		<div class="row">
-			<p>Target</p>
+			<p><?php _e( 'Target', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
 			<input type="checkbox" id="target" name="target">
-			<small>Open in new tab/window</small>
+			<small><?php _e( 'Open in new tab/window', 'metronet-tag-manager' ); ?></small>
 		</div>
 
 		<div class="row">
-			<strong>Data Layers</strong>
+			<strong><?php _e( 'Data Layers', 'metronet-tag-manager' ); ?></strong>
 		</div>
 
 		<div id="dataLayers">
 			<div class="row">
-				<p>Parameter</p>
-				<p>Value</p>
+				<p><?php _e( 'Parameter', 'metronet-tag-manager' ); ?></p>
+				<p><?php _e( 'Value', 'metronet-tag-manager' ); ?></p>
 			</div>
 
 			<div class="row">
@@ -76,11 +76,11 @@
 			</div>
 		</div>
 
-		<input type="button" value="Add" id="apply">
+		<input type="button" value="<?php _e( 'Add', 'metronet-tag-manager' ); ?>" id="apply">
 
 		<div class="mceActionPanel">
-			<input type="submit" name="insert" value="Save" id="insert" />
-			<input type="button" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" id="cancel" />
+			<input type="submit" name="insert" value="<?php _e( 'Save', 'metronet-tag-manager' ); ?>" id="insert" />
+			<input type="button" name="cancel" value="<?php _e( 'Cancel', 'metronet-tag-manager' ); ?>" onclick="tinymce.activeEditor.windowManager.close();" id="cancel" />
 		</div>
 	</form>
 </body> 

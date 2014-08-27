@@ -1,3 +1,7 @@
+body {
+	font-size: .75em;
+}
+
 #data{
 	padding: 15px 5px;
 }
@@ -17,6 +21,8 @@ p {
 
 input {
 	margin: 2px 0;
+	padding: .5em;
+	font-size: 1em;
 }
 
 strong {

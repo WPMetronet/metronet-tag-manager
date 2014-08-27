@@ -1,9 +1,9 @@
 === Metronet Tag Manager ===
 Contributors: ronalfy, metronet, pereirinha
 Tags: google, google tag manager, tag manager
-Requires at least: 3.1
-Tested up to: 3.6
-Stable tag: 1.0.2
+Requires at least: 3.9
+Tested up to: 3.9.1
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,12 @@ The data layer is an object that contains the information that you want to pass 
 3. TinyMCE button for adding dataLayer variables.
 
 == Changelog ==
+
+= 1.0.3 =
+* Released 2014-07-08
+* Migration to TinyMCE 4
+* Translations template
+
 = 1.0.2 =
 * Released 2013-07-30
 * Documentation update
