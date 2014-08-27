@@ -2,8 +2,8 @@
 Contributors: ronalfy, metronet, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
-Tested up to: 3.9.1
-Stable tag: 1.0.3
+Tested up to: 4.0
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,11 @@ The data layer is an object that contains the information that you want to pass 
 3. TinyMCE button for adding dataLayer variables.
 
 == Changelog ==
+
+= 1.0.4 =
+* Released 2014-08-27
+* Fixed meta problem with datavariables showing up in areas where there aren't posts or pages
+* Ensuring WordPress 4.0 compatibility
 
 = 1.0.3 =
 * Released 2014-07-08
