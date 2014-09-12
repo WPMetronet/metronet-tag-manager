@@ -3,7 +3,7 @@ Contributors: ronalfy, metronet, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,10 @@ The data layer is an object that contains the information that you want to pass 
 
 == Changelog ==
 
+= 1.0.5 =
+* Released 2014-09-11
+* Fixed anonymous function crashing PHP < 5.3 users
+
 = 1.0.4 =
 * Released 2014-08-27
 * Fixed meta problem with datavariables showing up in areas where there aren't posts or pages
@@ -92,6 +96,9 @@ The data layer is an object that contains the information that you want to pass 
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.5 =
+Fixed anonymous function crashing PHP < 5.3 users
 
 = 1.0.2 =
 Documentation update

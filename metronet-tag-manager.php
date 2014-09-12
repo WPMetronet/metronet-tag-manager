@@ -4,7 +4,7 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Metronet
-Version: 1.0.4
+Version: 1.0.5
 Requires at least: 3.9
 Author URI: http://www.metronet.no
 Contributors: ronalfy, metronet, pereirinha
@@ -209,13 +209,7 @@ class Metronet_Tag_Manager {
 		//TinyMCE Addition
 		if ( ( current_user_can('edit_posts') || current_user_can('edit_pages') ) && get_user_option('rich_editing') ) {
 			// Register addicional attribue for A tag
-			add_filter('tiny_mce_before_init', function( $options ){
-				if ( ! isset( $options['extended_valid_elements'] ) )
-					$options['extended_valid_elements'] = ''; 
-
-				$options['extended_valid_elements'] .= ',a[target<_blank?_self?_top?_parent|ping|media|href|hreflang|type|rel<alternate?archives?author?bookmark?external?feed?first?help?index?last?license?next?nofollow?noreferrer?prev?search?sidebar?tag?up|onclick|id|class|title]'; 
-				return $options; 
-			});
+			add_filter('tiny_mce_before_init', array( $this, 'tinymce_options'  ) );
 
 			add_filter('mce_external_plugins', array( $this, 'tinymce_add_metro_gtm_tinymce_plugin' ) );
 			add_filter('mce_buttons', array( $this, 'tinymce_register_metro_gtm_button' ) );
@@ -224,6 +218,13 @@ class Metronet_Tag_Manager {
 		}
 	} //end init
 	
+	public function tinymce_options( $options ) {
+		if ( ! isset( $options['extended_valid_elements'] ) )
+			$options['extended_valid_elements'] = ''; 
+	
+		$options['extended_valid_elements'] .= ',a[target<_blank?_self?_top?_parent|ping|media|href|hreflang|type|rel<alternate?archives?author?bookmark?external?feed?first?help?index?last?license?next?nofollow?noreferrer?prev?search?sidebar?tag?up|onclick|id|class|title]'; 
+		return $options; 
+	}
 	public function tinymce_add_metro_gtm_tinymce_plugin( $plugin_array ) {
 		$plugin_array['metro_gtm'] = plugins_url( '/tinyMCE/editor_plugin.js', __FILE__ );
 		return $plugin_array;
