@@ -1,9 +1,9 @@
 === Metronet Tag Manager ===
-Contributors: ronalfy, metronet, pereirinha
+Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
-Tested up to: 4.1
-Stable tag: 1.0.5
+Tested up to: 4.2
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,10 @@ The data layer is an object that contains the information that you want to pass 
 
 == Changelog ==
 
+= 1.0.6 =
+* Released 2015-04-03
+* Bug fix - Allow periods in datavariables to comply with GTM 2.0.
+
 = 1.0.5 =
 * Updated 2014-12-11 - Ensuring WordPress 4.1 compatibility 
 * Released 2014-09-11
@@ -97,6 +101,9 @@ The data layer is an object that contains the information that you want to pass 
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.6 =
+Bug fix - Allow periods in datavariables to comply with GTM 2.0.
 
 = 1.0.5 =
 Fixed anonymous function crashing PHP < 5.3 users

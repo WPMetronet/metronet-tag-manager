@@ -4,10 +4,10 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Metronet
-Version: 1.0.5
+Version: 1.0.6
 Requires at least: 3.9
-Author URI: http://www.metronet.no
-Contributors: ronalfy, metronet, pereirinha
+Author URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
+Contributors: ronalfy,, pereirinha
 */ 
 class Metronet_Tag_Manager {
 	private static $instance = null;
@@ -363,7 +363,6 @@ class Metronet_Tag_Manager {
 			<ol>
 			<?php
 			if ( !is_array( $gtm_vars ) ) $gtm_vars = array();
-			
 			foreach( $gtm_vars as $index => $vars ) {
 				//$vars should contain 'name', 'value'
 				?>
@@ -432,7 +431,7 @@ class Metronet_Tag_Manager {
 		}
 	
 		$var = preg_replace('/&.+?;/', '', $var); // kill entities
-		$var = str_replace('.', '-', $var);
+		//$var = str_replace('.', '-', $var); //Commented out for compatibility with GTM 2.0
 	
 		// Convert nbsp, ndash and mdash to hyphens
 		$var = str_replace( array( '%c2%a0', '%e2%80%93', '%e2%80%94' ), '-', $var );
@@ -455,7 +454,7 @@ class Metronet_Tag_Manager {
 		// Convert times to x
 		$var = str_replace( '%c3%97', 'x', $var );
 	
-		$var = preg_replace('/[^%a-zA-Z0-9 _-]/', '', $var);
+		$var = preg_replace('/[^\.%a-zA-Z0-9 _-]/', '', $var);
 		$var = preg_replace('/\s+/', '-', $var);
 		$var = preg_replace('|-+|', '-', $var);
 		$var = trim($var, '-');
