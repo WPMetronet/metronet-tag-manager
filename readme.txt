@@ -2,7 +2,7 @@
 Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -71,6 +71,7 @@ The data layer is an object that contains the information that you want to pass 
 == Changelog ==
 
 = 1.0.6 =
+* Updated 2015-08-20 - WordPress 4.3
 * Released 2015-04-03
 * Bug fix - Allow periods in datavariables to comply with GTM 2.0.
 
