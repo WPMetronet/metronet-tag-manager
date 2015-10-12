@@ -1,0 +1,207 @@
+# Copyright (C) 2014 Metronet Tag Manager
+# This file is distributed under the same license as the Metronet Tag Manager package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Metronet Tag Manager 1.0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/metronet-tag-manager\n"
+"POT-Creation-Date: 2015-10-11 20:41-0600\n"
+"PO-Revision-Date: 2015-10-11 20:42-0600\n"
+"Last-Translator: Ronald Huereca <ron@ronalfy.com>\n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../metronet-tag-manager.php:51 ../metronet-tag-manager.php:58
+#, fuzzy
+msgid "Settings"
+msgstr "Настройки"
+
+#: ../metronet-tag-manager.php:245
+#, fuzzy
+msgid "Google Tag Manager DataLayer variables"
+msgstr ""
+"Добавить тег менеджер Google отслеживания и объявить переменные уровня данных"
+
+#: ../metronet-tag-manager.php:374
+#, fuzzy
+msgid "Name: "
+msgstr "Имя: "
+
+#: ../metronet-tag-manager.php:375
+#, fuzzy
+msgid "Value: "
+msgstr "Значение:"
+
+#: ../metronet-tag-manager.php:375 ../metronet-tag-manager.php:394
+#, fuzzy
+msgid "Delete"
+msgstr "Удалить"
+
+#: ../metronet-tag-manager.php:392
+#, fuzzy
+msgid "Name"
+msgstr "Ваше имя"
+
+#: ../metronet-tag-manager.php:393 ../tinyMCE/addparams.php:70
+#, fuzzy
+msgid "Value"
+msgstr "Значение"
+
+#: ../metronet-tag-manager.php:496
+msgid "This request cannot be verified"
+msgstr "Этот запрос не может быть проверен"
+
+#: ../metronet-tag-manager.php:499
+#, fuzzy
+msgid "Settings saved"
+msgstr "Настройки сохранены"
+
+#: ../metronet-tag-manager.php:572
+msgid ""
+"Google recommends that the Google Tag Manager script is loaded straight "
+"after the opening <body> tag. For this to work, you will need to add the "
+"following piece of code into your template file just after the <body> tag: <?"
+"php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at "
+"the bottom of your site and might not track the way you want it to."
+msgstr ""
+"Google рекомендует, чтобы код Google Tag Manager загружался первым, для "
+"этого поместите его сразу после тега <body>. Чтобы это работало, вам нужно "
+"будет добавить следующий фрагмент кода в файл шаблон сразу после тега "
+"<body>: <?php do_action( 'body_open' ); ?> . В противном случае GMT сценарий "
+"будет добавлен в нижней части вашего сайта и не может отслеживать то, что вы "
+"хотите отслеживать."
+
+#: ../metronet-tag-manager.php:578
+msgid "Google Tag Manager Code"
+msgstr "Код Google Tag Manager"
+
+#: ../metronet-tag-manager.php:580
+msgid ""
+"You can view your Container Snippet by logging into Google Tag Manager, "
+"clicking \"Users & Settings\", and clicking on \"Settings\"."
+msgstr ""
+"Можно просмотреть ваш контейнер фрагмента, войдя в тег менеджер Google, "
+"нажав «Параметры пользователей» и нажав кнопку «Настройки»."
+
+#: ../metronet-tag-manager.php:581
+msgid "Paste your Google Tag Manager code here:"
+msgstr "Вставьте ваш Google Tag Manager код здесь:"
+
+#: ../metronet-tag-manager.php:586
+msgid "Post/Page Variables"
+msgstr "Переменные страницы/записи"
+
+#: ../metronet-tag-manager.php:588
+msgid ""
+"Add global variables and set defaults to show on posts, pages, and custom "
+"post types.  You can configure or overwrite these on a per-post basis by "
+"viewing a post."
+msgstr ""
+"Добавьте глобальные переменные и задайте значения по умолчанию, чтобы "
+"показать на в постах, страницах и других пользовательских типах данных.  Вы "
+"можете настроить или перезаписать их на основе предпросмотра, просмотрев "
+"пост."
+
+#: ../metronet-tag-manager.php:589 ../metronet-tag-manager.php:597
+#, php-format
+msgid ""
+"To see some examples, please visit the <a href=\"%s\">Google Tag Manager "
+"Reference</a>."
+msgstr ""
+
+#: ../metronet-tag-manager.php:594
+msgid "External Variables"
+msgstr "Внешние переменные"
+
+#: ../metronet-tag-manager.php:596
+msgid ""
+"Add global variables that will show on all pages except posts, pages, or "
+"custom post types."
+msgstr ""
+"Добавьте глобальные переменные, которые будут показывать на всех страницах, "
+"за исключением постов, страниц или пользовательских типов данных."
+
+#: ../metronet-tag-manager.php:602
+#, fuzzy
+msgid "Reset to Defaults"
+msgstr "Сброс по умолчанию"
+
+#: ../metronet-tag-manager.php:602
+#, fuzzy
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: ../tinyMCE/addparams.php:20
+#, fuzzy
+msgid "Description"
+msgstr "Описание"
+
+#: ../tinyMCE/addparams.php:28
+#, fuzzy
+msgid "Title"
+msgstr "Название (Title):"
+
+#: ../tinyMCE/addparams.php:36
+#, fuzzy
+msgid "URL"
+msgstr "URL"
+
+#: ../tinyMCE/addparams.php:45
+#, fuzzy
+msgid "Id"
+msgstr "Id"
+
+#: ../tinyMCE/addparams.php:46
+#, fuzzy
+msgid "Class"
+msgstr "Класс"
+
+#: ../tinyMCE/addparams.php:55
+#, fuzzy
+msgid "Target"
+msgstr "Цель"
+
+#: ../tinyMCE/addparams.php:60
+msgid "Open in new tab/window"
+msgstr "Открыть в новой вкладке/окне"
+
+#: ../tinyMCE/addparams.php:64
+msgid "Data Layers"
+msgstr "Слои"
+
+#: ../tinyMCE/addparams.php:69
+#, fuzzy
+msgid "Parameter"
+msgstr "Parameter"
+
+#: ../tinyMCE/addparams.php:79
+#, fuzzy
+msgid "Add"
+msgstr "Добавить"
+
+#: ../tinyMCE/addparams.php:82
+#, fuzzy
+msgid "Save"
+msgstr "Сохранить"
+
+#: ../tinyMCE/addparams.php:83
+#, fuzzy
+msgid "Cancel"
+msgstr "Отменить"
+
+#~ msgid "Metronet Tag Manager"
+#~ msgstr "Диспетчер тегов MetroNet"
+
+#~ msgid "http://wordpress.org/extend/plugins/metronet-tag-manager/"
+#~ msgstr "http://WordPress.org/Extend/plugins/MetroNet-Tag-Manager/"
+
+#~ msgid "Metronet"
+#~ msgstr "MetroNet"
+
+#~ msgid "http://www.metronet.no"
+#~ msgstr "http://www.MetroNet.No"

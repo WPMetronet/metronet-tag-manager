@@ -7,6 +7,8 @@ Author: Metronet
 Version: 1.0.6
 Requires at least: 3.9
 Author URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
+Text Domain: metronet-tag-manager
+Domain Path: /languages
 Contributors: ronalfy,, pereirinha
 */ 
 class Metronet_Tag_Manager {
@@ -24,6 +26,8 @@ class Metronet_Tag_Manager {
 	private function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 		$this->admin_options = $this->get_admin_options();
+		
+		load_plugin_textdomain( 'metronet-tag-manager', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	
 	} //end construct
 	
@@ -168,7 +172,7 @@ class Metronet_Tag_Manager {
 	*/
 	public function init() {
 		//* Localization Code */
-		load_plugin_textdomain( 'metronet_tag_manager', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		
 		
 		//Admin Menu
 		if ( $this->is_multisite() ) {
@@ -238,7 +242,7 @@ class Metronet_Tag_Manager {
 	//Initializes the post meta box
 	public function meta_box_init( $post_type ) {
 		if ( get_post_type() === false ) return;
-		add_meta_box( 'metronet_tag_manager', 'Google Tag Manager DataLayer variables', array( $this, 'meta_box_settings' ), $post_type, 'normal', 'default' );
+		add_meta_box( 'metronet_tag_manager', __( 'Google Tag Manager DataLayer variables', 'metronet-tag-manager' ), array( $this, 'meta_box_settings' ), $post_type, 'normal', 'default' );
 	} //end meta_box_init
 	
 	//Save meta box options
@@ -367,14 +371,14 @@ class Metronet_Tag_Manager {
 				//$vars should contain 'name', 'value'
 				?>
 				<li>
-				<label for="var_name_<?php echo esc_attr( $index ); ?>"><?php esc_html_e( 'Name: ', 'metronet_tag_manager' ); ?></label><input type="text" value="<?php echo esc_attr( $vars[ 'name' ] ); ?>" id="var_name_<?php echo esc_attr( $index ); ?>" name="<?php echo esc_attr( $gtm_label ); ?>[<?php echo esc_attr( $index ); ?>][name]" />&nbsp;&nbsp;-&nbsp;&nbsp;
-				<label for="var_value_<?php echo esc_attr( $index ); ?>"><?php esc_html_e( 'Value: ', 'metronet_tag_manager' ); ?></label><input type="text" value="<?php echo esc_attr( $vars[ 'value' ] ); ?>" id="var_value_<?php echo esc_attr( $index ); ?>" name="<?php echo esc_attr( $gtm_label ); ?>[<?php echo esc_attr( $index ); ?>][value]" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" title="<?php echo esc_attr( __( 'Delete', 'metronet_tag_manager' ) ); ?>"><img src="<?php echo esc_url( plugins_url( '/images/delete.png', __FILE__ ) ); ?>" alt="<?php echo esc_attr( __( 'Delete', 'metronet_tag_manager' ) ); ?>" title="<?php echo esc_attr( __( 'Delete', 'metronet_tag_manager' ) ); ?>" width="20" height="20" /></a>
+				<label for="var_name_<?php echo esc_attr( $index ); ?>"><?php esc_html_e( 'Name: ', 'metronet-tag-manager' ); ?></label><input type="text" value="<?php echo esc_attr( $vars[ 'name' ] ); ?>" id="var_name_<?php echo esc_attr( $index ); ?>" name="<?php echo esc_attr( $gtm_label ); ?>[<?php echo esc_attr( $index ); ?>][name]" />&nbsp;&nbsp;-&nbsp;&nbsp;
+				<label for="var_value_<?php echo esc_attr( $index ); ?>"><?php esc_html_e( 'Value: ', 'metronet-tag-manager' ); ?></label><input type="text" value="<?php echo esc_attr( $vars[ 'value' ] ); ?>" id="var_value_<?php echo esc_attr( $index ); ?>" name="<?php echo esc_attr( $gtm_label ); ?>[<?php echo esc_attr( $index ); ?>][value]" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" title="<?php echo esc_attr( __( 'Delete', 'metronet-tag-manager' ) ); ?>"><img src="<?php echo esc_url( plugins_url( '/images/delete.png', __FILE__ ) ); ?>" alt="<?php echo esc_attr( __( 'Delete', 'metronet-tag-manager' ) ); ?>" title="<?php echo esc_attr( __( 'Delete', 'metronet-tag-manager' ) ); ?>" width="20" height="20" /></a>
 				</li>
 				<?php
 			} //end foreach $gtm_vars
 			?>
 			</ol>
-			<a class="tag_manager_add" href="#" title="<?php echo esc_attr( 'Add Item', 'metronet_tag_manager' ); ?>"><?php echo esc_attr( 'Add Item', 'metronet_tag_manager' ); ?></a>
+			<a class="tag_manager_add" href="#" title="<?php echo esc_attr( 'Add Item', 'metronet-tag-manager' ); ?>"><?php echo esc_attr( 'Add Item', 'metronet-tag-manager' ); ?></a>
 			<input type="hidden" name="tag_manager_index" class="tag_manager_index" value="<?php echo count( $gtm_vars ); ?>" />
 			<input type="hidden" name="tag_manager_label" class="tag_manager_label" value="<?php echo esc_attr( $gtm_label ); ?>" />
 		</div><!-- .datalayer_variables -->
@@ -385,9 +389,9 @@ class Metronet_Tag_Manager {
 	public function print_scripts_settings() {
 		wp_enqueue_script( 'MTM_settings', plugins_url( '/js/mtm-settings.js', __FILE__ ), array( 'jquery' ), '20120715', true );
 		wp_localize_script( 'MTM_settings', 'mtm_admin', array(
-			'name' => __( 'Name', 'metronet_tag_manager' ),
-			'value' => __( 'Value', 'metronet_tag_manager' ),
-			'delete' => __( 'Delete', 'metronet_tag_manager' ),
+			'name' => __( 'Name', 'metronet-tag-manager' ),
+			'value' => __( 'Value', 'metronet-tag-manager' ),
+			'delete' => __( 'Delete', 'metronet-tag-manager' ),
 			'delete_src' => plugins_url( '/images/delete.png', __FILE__ )
 		) );
 	} //end print_scripts_settings
@@ -489,10 +493,10 @@ class Metronet_Tag_Manager {
 		//Handle saving of data
 		if ( isset( $_POST[ 'reset' ] ) || isset( $_POST[ 'submit' ] ) ) {
 			if ( !wp_verify_nonce( $_REQUEST[ '_metronet' ], 'save_metronet_settings_tags' ) ) {
-				echo sprintf( '<div class="error"><p><strong>%s</strong></p></div>', __( 'This request cannot be verified', 'metronet_tag_manager' ) );
+				echo sprintf( '<div class="error"><p><strong>%s</strong></p></div>', __( 'This request cannot be verified', 'metronet-tag-manager' ) );
 			} else {
 				//A little early, but who cares?
-				echo sprintf( '<div class="updated"><p><strong>%s</strong></p></div>', __( 'Settings saved', 'metronet_tag_manager' ) );
+				echo sprintf( '<div class="updated"><p><strong>%s</strong></p></div>', __( 'Settings saved', 'metronet-tag-manager' ) );
 			}
 		}
 		if ( isset( $_POST[ 'reset' ] ) ) {
@@ -565,37 +569,37 @@ class Metronet_Tag_Manager {
 		$user_id = $current_user->ID;
 		if ( !get_user_meta( $user_id, 'gtm_body_notice', true ) ) {
 			echo '<div class="updated"><p>';
-			esc_html_e( "Google recommends that the Google Tag Manager script is loaded straight after the opening <body> tag. For this to work, you will need to add the following piece of code into your template file just after the <body> tag: <?php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at the bottom of your site and might not track the way you want it to.", 'metronet_tag_manager' );
+			esc_html_e( "Google recommends that the Google Tag Manager script is loaded straight after the opening <body> tag. For this to work, you will need to add the following piece of code into your template file just after the <body> tag: <?php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at the bottom of your site and might not track the way you want it to.", 'metronet-tag-manager' );
 			echo '</p></div>';
 		}
 		?>
 		<table class="form-table">
 			<tr valign="top">
-				<th scope="row"><?php esc_html_e( 'Google Tag Manager Code', 'metronet_tag_manager' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'Google Tag Manager Code', 'metronet-tag-manager' ); ?></th>
 				<td>
-					<p><?php esc_html_e( 'You can view your Container Snippet by logging into Google Tag Manager, clicking "Users & Settings", and clicking on "Settings".', 'metronet_tag_manager' ); ?></p>
-					<p><em><?php esc_html_e( 'Paste your Google Tag Manager code here:', 'metronet_tag_manager' ); ?></em></p>
+					<p><?php esc_html_e( 'You can view your Container Snippet by logging into Google Tag Manager, clicking "Users & Settings", and clicking on "Settings".', 'metronet-tag-manager' ); ?></p>
+					<p><em><?php esc_html_e( 'Paste your Google Tag Manager code here:', 'metronet-tag-manager' ); ?></em></p>
 					<p><textarea name="gtm-code" class="large-text code" rows="10"><?php echo stripslashes( esc_textarea( $gtm_code ) ); ?></textarea></p>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php esc_html_e( 'Post/Page Variables', 'metronet_tag_manager' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'Post/Page Variables', 'metronet-tag-manager' ); ?></th>
 				<td>
-					<p><?php esc_html_e( 'Add global variables and set defaults to show on posts, pages, and custom post types.  You can configure or overwrite these on a per-post basis by viewing a post.', 'metronet_tag_manager' ); ?></p>
-					<p><?php printf( 'To see some examples, please visit the <a href="%s">Google Tag Manager Reference</a>.', 'https://developers.google.com/tag-manager/reference' );?></p>
+					<p><?php esc_html_e( 'Add global variables and set defaults to show on posts, pages, and custom post types.  You can configure or overwrite these on a per-post basis by viewing a post.', 'metronet-tag-manager' ); ?></p>
+					<p><?php printf( __( 'To see some examples, please visit the <a href="%s">Google Tag Manager Reference</a>.', 'metronet-tag-manager' ), 'https://developers.google.com/tag-manager/reference' );?></p>
 					<?php $this->output_variables_to_edit( $gtm_vars, 'tag_manager' ); ?>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php esc_html_e( 'External Variables', 'metronet_tag_manager' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'External Variables', 'metronet-tag-manager' ); ?></th>
 				<td>
-					<p><?php esc_html_e( 'Add global variables that will show on all pages except posts, pages, or custom post types.', 'metronet_tag_manager' ); ?></p>
-					<p><?php printf( 'To see some examples, please visit the <a href="%s">Google Tag Manager Reference</a>.', 'https://developers.google.com/tag-manager/reference' );?></p>
+					<p><?php esc_html_e( 'Add global variables that will show on all pages except posts, pages, or custom post types.', 'metronet-tag-manager' ); ?></p>
+					<p><?php printf( __( 'To see some examples, please visit the <a href="%s">Google Tag Manager Reference</a>.', 'metronet-tag-manager' ), 'https://developers.google.com/tag-manager/reference' );?></p>
 					<?php $this->output_variables_to_edit( $gtm_external_vars, 'external_tag_manager' ); ?>
 				</td>
 			</tr>
 		</table>
-		<p class="submit"><?php submit_button( __( 'Reset to Defaults', 'metronet_tag_manager' ), 'delete', 'reset', false ); ?>&nbsp;&nbsp;&nbsp;<?php submit_button( __( 'Save Changes', 'metronet_tag_manager' ), 'primary', 'submit', false ); ?>
+		<p class="submit"><?php submit_button( __( 'Reset to Defaults', 'metronet-tag-manager' ), 'delete', 'reset', false ); ?>&nbsp;&nbsp;&nbsp;<?php submit_button( __( 'Save Changes', 'metronet-tag-manager' ), 'primary', 'submit', false ); ?>
 		<?php
 		
 		
