@@ -9,7 +9,7 @@ Requires at least: 3.9
 Author URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Text Domain: metronet-tag-manager
 Domain Path: /languages
-Contributors: ronalfy,, pereirinha
+Contributors: ronalfy,pereirinha
 */ 
 class Metronet_Tag_Manager {
 	private static $instance = null;
@@ -325,7 +325,20 @@ class Metronet_Tag_Manager {
 		//Now output dataLayer variables
 		echo '<script>' . "\n";
 		foreach( $data_layer_array as &$value ) {
-			$value = preg_replace_callback( "|%([^%]*)%|", array( $this, 'variable_replace' ), $value );
+			if ( preg_match( '/^%([^%]*)%/', $value, $matches ) ) {
+				/**
+				 * Retrieves a variable like %post_title% and does apply_filters( 'gtm_post_title', '%post_title%', 'post_title', post_id );
+				 *
+				 * Description.
+				 *
+				 * @since 1.0.0
+				 *
+				 * @param string  $matches[0] %variable_name%
+				 * @param string  $matches[1] variable_name
+				 * @param int     $post_id    Object ID
+				 */
+				$value = apply_filters( 'gtm_' . $matches[1], $matches[0], $matches[1], $post_id );
+			}
 		}
 		printf( 'dataLayer = [%s];', json_encode( $data_layer_array ) );
 		echo "\n";
@@ -351,15 +364,6 @@ class Metronet_Tag_Manager {
 		echo $gtm_code;
 		
 	} //end output_tag_manager
-	
-	//A RegEx callback for tag manager variables in the format of %variable_value%.
-	//This ensures a valid callback and filtering mechanism that can overwrite variable values.
-	public function variable_replace( $matches ) {
-		$post_id = get_queried_object_id();
-
-		//Retrieves a variable like %post_title% and does apply_filters( 'gtm_post_title', '%post_title%', 'post_title', post_id );
-		return apply_filters( 'gtm_' . $matches[1], $matches[0], $matches[1], $post_id ); 
-	}
 	
 	private function output_variables_to_edit( $gtm_vars, $gtm_label ) {
 		?>
