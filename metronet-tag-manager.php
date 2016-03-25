@@ -338,8 +338,8 @@ class Metronet_Tag_Manager {
 				$value = apply_filters( 'gtm_' . $matches[1], $matches[0], $matches[1], $post_id );
 			}
 		}
-		echo '<script>' . "\n";
-		printf( 'dataLayer = [%s];', json_encode( $data_layer_array ) ) . "\n";
+		echo "\n" . '<script>' . "\n";
+		echo sprintf( 'dataLayer = [%s];', json_encode( $data_layer_array ) ) . "\n";
 		echo '</script>' . "\n";
 		
 		//Output GTM Code
