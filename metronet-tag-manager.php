@@ -321,7 +321,6 @@ class Metronet_Tag_Manager {
 			}
 		}
 		//Now output dataLayer variables
-		echo '<script>' . "\n";
 		$post_id = get_queried_object_id();
 		foreach( $data_layer_array as &$value ) {
 			if ( preg_match( '/^%([^%]*)%/', $value, $matches ) ) {
@@ -339,8 +338,8 @@ class Metronet_Tag_Manager {
 				$value = apply_filters( 'gtm_' . $matches[1], $matches[0], $matches[1], $post_id );
 			}
 		}
-		printf( 'dataLayer = [%s];', json_encode( $data_layer_array ) );
-		echo "\n";
+		echo '<script>' . "\n";
+		printf( 'dataLayer = [%s];', json_encode( $data_layer_array ) ) . "\n";
 		echo '</script>' . "\n";
 		
 		//Output GTM Code
