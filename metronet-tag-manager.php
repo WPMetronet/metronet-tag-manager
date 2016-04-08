@@ -270,7 +270,7 @@ class Metronet_Tag_Manager {
 		if ( isset( $_POST[ 'tag_manager' ] ) && !empty( $_POST[ 'tag_manager' ] ) ) {
 			foreach( $_POST[ 'tag_manager' ] as $variable ) {
 				$name = $this->sanitize_variable_name( $variable[ 'name' ] );
-				$value = sanitize_text_field( $variable[ 'value' ] );
+				$value = $this->sanitize_value( $variable[ 'value' ] );
 				$variable_array[] = array(
 					'name' => $name,
 					'value' => $value
@@ -418,6 +418,21 @@ class Metronet_Tag_Manager {
 	} //end safe_css
 	
 	/**
+	* sanitize_value
+	* 
+	* Make sure values are in the proper format
+	*
+	* @param   string  $value   A variable to be sanitized
+	* @returns array   $value   A formatted variable
+	**/
+	private function sanitize_value( $value ) { 
+		if( preg_match( '/^%([-_A-Za-z0-9]*)%$/', $value ) ) {
+			return $value;
+		}
+		return sanitize_text_field( $value );
+	}
+	
+	/**
 	* sanitize_variable_name
 	* 
 	* Makes sure a variable name is stripped of spaces and converted for use
@@ -536,7 +551,7 @@ class Metronet_Tag_Manager {
 			if ( isset( $_POST[ 'tag_manager' ] ) && !empty( $_POST[ 'tag_manager' ] ) ) {
 				foreach( $_POST[ 'tag_manager' ] as $variable ) {
 					$name = $this->sanitize_variable_name( $variable[ 'name' ] );
-					$value = sanitize_text_field( $variable[ 'value' ] );
+					$value = $this->sanitize_value( $variable[ 'value' ] );
 					$variable_array[] = array(
 						'name' => $name,
 						'value' => $value
@@ -550,7 +565,7 @@ class Metronet_Tag_Manager {
 			if ( isset( $_POST[ 'external_tag_manager' ] ) && !empty( $_POST[ 'external_tag_manager' ] ) ) {
 				foreach( $_POST[ 'external_tag_manager' ] as $variable ) {
 					$name = $this->sanitize_variable_name( $variable[ 'name' ] );
-					$value = sanitize_text_field( $variable[ 'value' ] );
+					$value = $this->sanitize_value( $variable[ 'value' ] );
 					$external_variable_array[] = array(
 						'name' => $name,
 						'value' => $value
