@@ -350,15 +350,16 @@ class Metronet_Tag_Manager {
 		$gtm_code = stripslashes( $this->admin_options[ 'code' ] );
 		add_filter( 'safe_style_css', array( $this, 'safe_css' ) );
 		$allowed_tags = array(
-			'iframe' => array(
-				'src' => true,
-				'style' => true,
-				'width' => true,
+			'iframe'   => array(
+				'src'    => true,
+				'style'  => true,
+				'width'  => true,
 				'height' => true,
 			),
 			'noscript' => array(
 			),
-			'script' => array(
+			'script'   => array(
+				'data-cfasync' => true
 			)
 		);
 		$gtm_code = wp_kses( $gtm_code, $allowed_tags );
@@ -513,15 +514,16 @@ class Metronet_Tag_Manager {
 			//Format the GTM Code for saving
 			add_filter( 'safe_style_css', array( $this, 'safe_css' ) );
 			$allowed_tags = array(
-				'iframe' => array(
-					'src' => true,
-					'style' => true,
-					'width' => true,
+				'iframe'   => array(
+					'src'    => true,
+					'style'  => true,
+					'width'  => true,
 					'height' => true,
 				),
 				'noscript' => array(
 				),
-				'script' => array(
+				'script'   => array(
+					'data-cfasync' => true
 				)
 			);
 			$gtm_code = $_POST[ 'gtm-code' ];
