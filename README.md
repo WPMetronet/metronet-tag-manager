@@ -36,3 +36,18 @@ function gtm_replace_test( $total_match, $match, $post_id ) {
 ```
 
 The filter name is `gtm_` with the suffix of `replace_test`, since that content is inbetween the percentage signs.
+
+Another example is outputting the post categories. The value in this case would be `%post_category%`.
+
+You would place the code below in your theme's `functions.php` or a site-specific plugin.
+
+```php
+add_filter( 'gtm_post_category', 'gtm_populate_category_items', 10, 3 );
+function gtm_populate_category_items( $total_match, $match, $post_id  ) {
+	$terms = wp_get_object_terms( $post_id, 'category', array( 'fields' => 'slugs' ) );
+	if ( is_wp_error( $terms ) || empty( $terms ) ) {
+		return '';
+	}
+	return $terms;
+}
+```
