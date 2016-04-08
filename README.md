@@ -23,6 +23,8 @@ Please refer to the <a href="https://developers.google.com/tag-manager/reference
 
 ###What are dataLayer variables used for?###
 
+The data layer is an object that contains the information that you want to pass to Google Tag Manager. By setting up rules in Google Tag Manager, these variables can then be used to include the correct snippets or scripts – for example when a certain button is clicked.
+
 Filtering Variables
 -----------------------
 If you choose to place variable values inside percentage signs (e.g., %replace_test%), you can filter these as necessary.
