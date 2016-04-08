@@ -3,7 +3,7 @@ Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
 Tested up to: 4.5
-Stable tag: 1.0.8
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,8 @@ http://cutroni.com/blog/2012/05/14/make-analytics-better-with-tag-management-and
 3. Modify your theme's `header.php` to include `<?php do_action( 'body_open' ); ?>` right after the opening `<body>` tag.
 4. Go to the plugin's settings and input your Google Tag Manager data.
 
+For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager#filtering-variables">please see the filters section on GitHub</a>.
+
 == Frequently Asked Questions ==
 
 = What is Google Tag Manager =
@@ -62,6 +64,10 @@ Please refer to the <a href="https://developers.google.com/tag-manager/reference
 
 The data layer is an object that contains the information that you want to pass to Google Tag Manager. By setting up rules in Google Tag Manager, these variables can then be used to include the correct snippets or scripts – for example when a certain button is clicked.
 
+= Can I have dynamic values? =
+
+Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager#filtering-variables">please see the filters section on GitHub</a>.
+
 == Screenshots ==
 
 1. Admin settings.
@@ -69,6 +75,12 @@ The data layer is an object that contains the information that you want to pass 
 3. TinyMCE button for adding dataLayer variables.
 
 == Changelog ==
+
+= 1.1.0 =
+* Updated 2016-04-08
+* Improved sanitization for custom values
+* Added support for CloudFlare arguments in GTM code
+* Prevent non-filtered custom value from being outputted in the dataLayer
 
 = 1.0.8 =
 * Updated 2016-03-25
@@ -106,6 +118,9 @@ The data layer is an object that contains the information that you want to pass 
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Bug fix - Over sanitization of custom values and prevent outputting un-filtered custom values to the dataLayer
 
 = 1.0.8 =
 Bug fix - Allow arrays/objects in dataLayer as JSON arguments.
