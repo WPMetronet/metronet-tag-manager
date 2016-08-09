@@ -2,10 +2,11 @@
 Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
-Tested up to: 4.5
+Tested up to: 4.6
 Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Donate link: https://mediaron.com/contribute/
 
 Integrate Google Tag Manager into  your website.
 
