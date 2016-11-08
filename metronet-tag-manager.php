@@ -199,8 +199,9 @@ class Metronet_Tag_Manager {
 		add_action( 'save_post', array( $this, 'meta_box_save' ), 10, 1 );
 		
 		//Load GTM in the Footer (or header if they have the do_action( 'body_open' ) functionality
-		add_action( 'body_open', array( $this, 'output_tag_manager' ) );
-		add_action( 'wp_footer', array( $this, 'output_tag_manager' ) );
+		add_action( 'wp_head', array( $this, 'output_tag_manager_head' ), 1 );
+		add_action( 'body_open', array( $this, 'output_tag_manager_body' ) );
+		add_action( 'wp_footer', array( $this, 'output_tag_manager_body' ) );
 		
 		//Filters for the GTM variables
 		add_filter( 'gtm_post_title', array( $this, 'filter_post_title' ), 9, 3 );
@@ -293,8 +294,7 @@ class Metronet_Tag_Manager {
 		$this->output_variables_to_edit( $gtm_vars, 'tag_manager' );
 	} //end meta_box_settings
 	
-	public function output_tag_manager() {
-		if ( did_action( 'body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
+	public function output_tag_manager_head() {
 		//Output DataLayer Variables
 		$data_layer_array = array();
 		if ( !is_single() && !is_page() ) {
@@ -349,7 +349,7 @@ class Metronet_Tag_Manager {
 		echo '</script>' . "\n";
 		
 		//Output GTM Code
-		$gtm_code = stripslashes( $this->admin_options[ 'code' ] );
+		$gtm_code = stripslashes( $this->admin_options[ 'code_head' ] );
 		add_filter( 'safe_style_css', array( $this, 'safe_css' ) );
 		$allowed_tags = array(
 			'iframe'   => array(
@@ -369,6 +369,31 @@ class Metronet_Tag_Manager {
 		echo $gtm_code;
 		
 	} //end output_tag_manager
+	
+	public function output_tag_manager_body() {
+		if ( did_action( 'body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
+		
+		//Output GTM Code
+		$gtm_code = stripslashes( $this->admin_options[ 'code' ] );
+		add_filter( 'safe_style_css', array( $this, 'safe_css' ) );
+		$allowed_tags = array(
+			'iframe'   => array(
+				'src'    => true,
+				'style'  => true,
+				'width'  => true,
+				'height' => true,
+			),
+			'noscript' => array(
+			),
+			'script'   => array(
+				'data-cfasync' => true
+			)
+		);
+		$gtm_code = wp_kses( $gtm_code, $allowed_tags );
+		remove_filter( 'safe_style_css', array( $this, 'safe_css' ) );
+		echo $gtm_code;
+		
+	} //end output_tag_manager_body
 	
 	private function output_variables_to_edit( $gtm_vars, $gtm_label ) {
 		?>
