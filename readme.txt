@@ -71,11 +71,16 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 == Screenshots ==
 
-1. Admin settings.
-2. Per-post/page settings.
-3. TinyMCE button for adding dataLayer variables.
+1. Google Tag Manager account dashboard
+2. Google Tag Manager Workspace
+3. Recommended Google Tag Manager snippet
+3. Google Tag Manager snippet inside the plugin
 
 == Changelog ==
+
+= 1.2.0 =
+* Updated 2016-11-08
+* Able to adhere to the new tag recommendations of inserting tag markup in the header and also after the body tag
 
 = 1.1.0 =
 * Updated 2016-04-08
@@ -119,6 +124,9 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+New admin interface to allow for new tag snippet entry
 
 = 1.1.0 =
 Bug fix - Over sanitization of custom values and prevent outputting un-filtered custom values to the dataLayer
