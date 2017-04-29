@@ -4,7 +4,7 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
-Version: 1.2.0
+Version: 1.2.1
 Requires at least: 4.2
 Author URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Text Domain: metronet-tag-manager
@@ -18,7 +18,7 @@ class Metronet_Tag_Manager {
 	
 	//Singleton
 	public static function get_instance() {
-		if ( null == self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self;
 		}
 		return self::$instance;
@@ -107,7 +107,7 @@ class Metronet_Tag_Manager {
 			} //end if empty options
 			$this->admin_options = $admin_options;
 			
-			if ( $this->admin_options != $options ) {
+			if ( $this->admin_options !== $options ) {
 				$this->save_admin_options();
 			}
 		} //end load default options
@@ -250,7 +250,7 @@ class Metronet_Tag_Manager {
 	public function meta_box_save( $post_id ) {
 		
 		//Make sure user can edit post/page
-		if ( 'page' == get_post_type() ) {
+		if ( 'page' === get_post_type() ) {
 			if ( !current_user_can( 'edit_page', $post_id ) ) {
 				return;
 			}
@@ -339,7 +339,7 @@ class Metronet_Tag_Manager {
 				 */
 				$value = apply_filters( 'gtm_' . $matches[1], $matches[0], $matches[1], $post_id );
 				//Prevent %item% from outputting in the dataLayer
-				if ( is_string( $value ) && $value == $matches[0] ) {
+				if ( is_string( $value ) && $value === $matches[0] ) {
 					$value = '';
 				}
 			}
@@ -450,7 +450,7 @@ class Metronet_Tag_Manager {
 	* Make sure values are in the proper format
 	*
 	* @param   string  $value   A variable to be sanitized
-	* @returns array   $value   A formatted variable
+	* @returns string   $value   A formatted variable
 	**/
 	private function sanitize_value( $value ) { 
 		if( preg_match( '/^%([-_A-Za-z0-9]*)%$/', $value ) ) {
@@ -465,7 +465,7 @@ class Metronet_Tag_Manager {
 	* Makes sure a variable name is stripped of spaces and converted for use
 	*
 	* @param string $var - A variable to be sanitized
-	* @returns array $var - A formatted variable
+	* @returns string $var - A formatted variable
 	**/
 	private function sanitize_variable_name( $var ) {
 		
