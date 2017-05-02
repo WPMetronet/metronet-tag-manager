@@ -17,7 +17,7 @@
 	<form name="source" onsubmit="return AddParams.insert();" action="#" id="data">
 
 		<div class="row">
-			<p><?php _e( 'Description', 'metronet-tag-manager' ); ?></p>
+			<p><?php esc_html_e( 'Description', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
@@ -25,7 +25,7 @@
 		<div>
 
 		<div class="row">
-			<p><?php _e( 'Title', 'metronet-tag-manager' ); ?></p>
+			<p><?php esc_html_e( 'Title', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
@@ -33,7 +33,7 @@
 		<div>
 
 		<div class="row">
-			<p><?php _e( 'URL', 'metronet-tag-manager' ); ?></p>
+			<p><?php esc_html_e( 'URL', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
@@ -42,8 +42,8 @@
 		</div>
 
 		<div class="row">
-			<p><?php _e( 'Id', 'metronet-tag-manager' ); ?></p>
-			<p><?php _e( 'Class', 'metronet-tag-manager' ); ?></p>
+			<p><?php esc_html_e( 'Id', 'metronet-tag-manager' ); ?></p>
+			<p><?php esc_html_e( 'Class', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
@@ -52,22 +52,22 @@
 		</div>
 
 		<div class="row">
-			<p><?php _e( 'Target', 'metronet-tag-manager' ); ?></p>
+			<p><?php esc_html_e( 'Target', 'metronet-tag-manager' ); ?></p>
 		</div>
 
 		<div class="row">
 			<input type="checkbox" id="target" name="target">
-			<small><?php _e( 'Open in new tab/window', 'metronet-tag-manager' ); ?></small>
+			<small><?php esc_html_e( 'Open in new tab/window', 'metronet-tag-manager' ); ?></small>
 		</div>
 
 		<div class="row">
-			<strong><?php _e( 'Data Layers', 'metronet-tag-manager' ); ?></strong>
+			<strong><?php esc_html_e( 'Data Layers', 'metronet-tag-manager' ); ?></strong>
 		</div>
 
 		<div id="dataLayers">
 			<div class="row">
-				<p><?php _e( 'Parameter', 'metronet-tag-manager' ); ?></p>
-				<p><?php _e( 'Value', 'metronet-tag-manager' ); ?></p>
+				<p><?php esc_html_e( 'Parameter', 'metronet-tag-manager' ); ?></p>
+				<p><?php esc_html_e( 'Value', 'metronet-tag-manager' ); ?></p>
 			</div>
 
 			<div class="row">
@@ -76,11 +76,11 @@
 			</div>
 		</div>
 
-		<input type="button" value="<?php _e( 'Add', 'metronet-tag-manager' ); ?>" id="apply">
+		<input type="button" value="<?php esc_attr_e( 'Add', 'metronet-tag-manager' ); ?>" id="apply">
 
 		<div class="mceActionPanel">
-			<input type="submit" name="insert" value="<?php _e( 'Save', 'metronet-tag-manager' ); ?>" id="insert" />
-			<input type="button" name="cancel" value="<?php _e( 'Cancel', 'metronet-tag-manager' ); ?>" onclick="tinymce.activeEditor.windowManager.close();" id="cancel" />
+			<input type="submit" name="insert" value="<?php esc_attr_e( 'Save', 'metronet-tag-manager' ); ?>" id="insert" />
+			<input type="button" name="cancel" value="<?php esc_attr_e( 'Cancel', 'metronet-tag-manager' ); ?>" onclick="tinymce.activeEditor.windowManager.close();" id="cancel" />
 		</div>
 	</form>
 </body> 

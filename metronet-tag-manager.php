@@ -4,7 +4,7 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
-Version: 1.2.0
+Version: 1.2.1
 Requires at least: 4.2
 Author URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Text Domain: metronet-tag-manager
@@ -18,7 +18,7 @@ class Metronet_Tag_Manager {
 	
 	//Singleton
 	public static function get_instance() {
-		if ( null == self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self;
 		}
 		return self::$instance;
@@ -47,14 +47,14 @@ class Metronet_Tag_Manager {
 	//Add a settings link for single site
 	public function add_settings_link( $links ) {
 		$admin_uri = add_query_arg( array( 'page' => 'metronet-tag-manager' ), admin_url( 'options-general.php' ) );
-		array_push($links, sprintf( '<a href="%s">%s</a>', $admin_uri, __( 'Settings', 'metronet-tag-manager' ) ) );
+		array_push($links, sprintf( '<a href="%s">%s</a>', esc_url( $admin_uri ), esc_html__( 'Settings', 'metronet-tag-manager' ) ) );
 		return $links;
 	} //end add_settings_link
 	
 	//Add a settings link for multisite
 	public function add_settings_link_multisite( $links ) {
 		$admin_uri = add_query_arg( array( 'page' => 'metronet-tag-manager' ), network_admin_url( 'settings.php' ) );
-		array_push($links, sprintf( '<a href="%s">%s</a>', $admin_uri, __( 'Settings', 'metronet-tag-manager' ) ) );
+		array_push($links, sprintf( '<a href="%s">%s</a>', esc_url( $admin_uri ), esc_html__( 'Settings', 'metronet-tag-manager' ) ) );
 		return $links;
 	} //end add_settings_link_multisite
 	
@@ -107,7 +107,7 @@ class Metronet_Tag_Manager {
 			} //end if empty options
 			$this->admin_options = $admin_options;
 			
-			if ( $this->admin_options != $options ) {
+			if ( $this->admin_options !== $options ) {
 				$this->save_admin_options();
 			}
 		} //end load default options
@@ -250,7 +250,7 @@ class Metronet_Tag_Manager {
 	public function meta_box_save( $post_id ) {
 		
 		//Make sure user can edit post/page
-		if ( 'page' == get_post_type() ) {
+		if ( 'page' === get_post_type() ) {
 			if ( !current_user_can( 'edit_page', $post_id ) ) {
 				return;
 			}
@@ -339,13 +339,13 @@ class Metronet_Tag_Manager {
 				 */
 				$value = apply_filters( 'gtm_' . $matches[1], $matches[0], $matches[1], $post_id );
 				//Prevent %item% from outputting in the dataLayer
-				if ( is_string( $value ) && $value == $matches[0] ) {
+				if ( is_string( $value ) && $value === $matches[0] ) {
 					$value = '';
 				}
 			}
 		}
 		echo "\n" . '<script>' . "\n";
-		echo sprintf( 'dataLayer = [%s];', json_encode( $data_layer_array ) ) . "\n";
+		echo sprintf( 'dataLayer = [%s];', wp_json_encode( $data_layer_array ) ) . "\n";
 		echo '</script>' . "\n";
 		
 		//Output GTM Code
@@ -423,9 +423,9 @@ class Metronet_Tag_Manager {
 	public function print_scripts_settings() {
 		wp_enqueue_script( 'MTM_settings', plugins_url( '/js/mtm-settings.js', __FILE__ ), array( 'jquery' ), '20120715', true );
 		wp_localize_script( 'MTM_settings', 'mtm_admin', array(
-			'name' => __( 'Name', 'metronet-tag-manager' ),
-			'value' => __( 'Value', 'metronet-tag-manager' ),
-			'delete' => __( 'Delete', 'metronet-tag-manager' ),
+			'name' => esc_html__( 'Name', 'metronet-tag-manager' ),
+			'value' => esc_html__( 'Value', 'metronet-tag-manager' ),
+			'delete' => esc_html__( 'Delete', 'metronet-tag-manager' ),
 			'delete_src' => plugins_url( '/images/delete.png', __FILE__ )
 		) );
 	} //end print_scripts_settings
@@ -450,7 +450,7 @@ class Metronet_Tag_Manager {
 	* Make sure values are in the proper format
 	*
 	* @param   string  $value   A variable to be sanitized
-	* @returns array   $value   A formatted variable
+	* @returns string   $value   A formatted variable
 	**/
 	private function sanitize_value( $value ) { 
 		if( preg_match( '/^%([-_A-Za-z0-9]*)%$/', $value ) ) {
@@ -465,7 +465,7 @@ class Metronet_Tag_Manager {
 	* Makes sure a variable name is stripped of spaces and converted for use
 	*
 	* @param string $var - A variable to be sanitized
-	* @returns array $var - A formatted variable
+	* @returns string $var - A formatted variable
 	**/
 	private function sanitize_variable_name( $var ) {
 		
@@ -542,10 +542,10 @@ class Metronet_Tag_Manager {
 		//Handle saving of data
 		if ( isset( $_POST[ 'reset' ] ) || isset( $_POST[ 'submit' ] ) ) {
 			if ( !wp_verify_nonce( $_REQUEST[ '_metronet' ], 'save_metronet_settings_tags' ) ) {
-				echo sprintf( '<div class="error"><p><strong>%s</strong></p></div>', __( 'This request cannot be verified', 'metronet-tag-manager' ) );
+				echo sprintf( '<div class="error"><p><strong>%s</strong></p></div>', esc_html__( 'This request cannot be verified', 'metronet-tag-manager' ) );
 			} else {
 				//A little early, but who cares?
-				echo sprintf( '<div class="updated"><p><strong>%s</strong></p></div>', __( 'Settings saved', 'metronet-tag-manager' ) );
+				echo sprintf( '<div class="updated"><p><strong>%s</strong></p></div>', esc_html__( 'Settings saved', 'metronet-tag-manager' ) );
 			}
 		}
 		if ( isset( $_POST[ 'reset' ] ) ) {
@@ -613,7 +613,7 @@ class Metronet_Tag_Manager {
 		$gtm_vars = $this->admin_options[ 'variables' ];
 		$gtm_external_vars = $this->admin_options[ 'external_variables' ];
 		?>
-		<form action="<?php echo add_query_arg( array() ); ?>" method="post">
+		<form action="<?php echo esc_url( add_query_arg( array() ) ); ?>" method="post">
 		<input type="hidden" name="action" value="save" />
 		<?php wp_nonce_field( 'save_metronet_settings_tags', '_metronet' ); ?>
 		<h2>Metronet Tag Manager</h2>
@@ -625,7 +625,7 @@ class Metronet_Tag_Manager {
 			echo '<div class="updated"><p>';
 			esc_html_e( "Google recommends that the Google Tag Manager script is loaded straight after the opening <body> tag. For this to work, you will need to add the following piece of code into your template file just after the <body> tag: <?php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at the bottom of your site and might not track the way you want it to.", 'metronet-tag-manager' );
 			echo '&nbsp;';
-			printf( __( '<a href="%s">View the Quickstart Guide</a>.', 'metronet-tag-manager' ), 'https://developers.google.com/tag-manager/quickstart' );
+			printf( esc_html__( '<a href="%s">View the Quickstart Guide</a>.', 'metronet-tag-manager' ), 'https://developers.google.com/tag-manager/quickstart' );
 			echo '</p></div>';
 		}
 		?>
@@ -652,12 +652,12 @@ class Metronet_Tag_Manager {
 				<th scope="row"><?php esc_html_e( 'External Variables', 'metronet-tag-manager' ); ?></th>
 				<td>
 					<p><?php esc_html_e( 'Add global variables that will show on all pages except posts, pages, or custom post types.', 'metronet-tag-manager' ); ?></p>
-					<p><?php printf( __( 'To see some examples, please visit the <a href="%s">Google Tag Manager Reference</a>.', 'metronet-tag-manager' ), 'https://developers.google.com/tag-manager/reference' );?></p>
+					<p><?php printf( esc_html__( 'To see some examples, please visit the <a href="%s">Google Tag Manager Reference</a>.', 'metronet-tag-manager' ), 'https://developers.google.com/tag-manager/reference' );?></p>
 					<?php $this->output_variables_to_edit( $gtm_external_vars, 'external_tag_manager' ); ?>
 				</td>
 			</tr>
 		</table>
-		<p class="submit"><?php submit_button( __( 'Reset to Defaults', 'metronet-tag-manager' ), 'delete', 'reset', false ); ?>&nbsp;&nbsp;&nbsp;<?php submit_button( __( 'Save Changes', 'metronet-tag-manager' ), 'primary', 'submit', false ); ?>
+		<p class="submit"><?php submit_button( esc_html__( 'Reset to Defaults', 'metronet-tag-manager' ), 'delete', 'reset', false ); ?>&nbsp;&nbsp;&nbsp;<?php submit_button( esc_html__( 'Save Changes', 'metronet-tag-manager' ), 'primary', 'submit', false ); ?>
 		<?php
 		
 		
