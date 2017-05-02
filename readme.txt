@@ -78,6 +78,10 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 == Changelog ==
 
+= 1.2.1 =
+* Updated 2017-05-02
+* Code cleanup and remediation by 10up
+
 = 1.2.0 =
 * Updated 2016-11-08
 * Able to adhere to the new tag recommendations of inserting tag markup in the header and also after the body tag
@@ -125,29 +129,8 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 == Upgrade Notice ==
 
-= 1.2.0 =
-New admin interface to allow for new tag snippet entry
-
-= 1.1.0 =
-Bug fix - Over sanitization of custom values and prevent outputting un-filtered custom values to the dataLayer
-
-= 1.0.8 =
-Bug fix - Allow arrays/objects in dataLayer as JSON arguments.
-
-= 1.0.6 =
-Bug fix - Allow periods in datavariables to comply with GTM 2.0.
-
-= 1.0.5 =
-Fixed anonymous function crashing PHP < 5.3 users
-
-= 1.0.2 =
-Documentation update
-
-= 1.0.1 =
-Fixing TinyMCE JavaScript bug.
-
-= 1.0 =
-Initial Release
+= 1.2.1 =
+Code cleanup and remediation by 10up.
 
 == Filtering Variables ==
 
