@@ -362,6 +362,9 @@ class Metronet_Tag_Manager {
 			),
 			'script'   => array(
 				'data-cfasync' => true
+			),
+			'style' => array(
+				
 			)
 		);
 		$gtm_code = wp_kses( $gtm_code, $allowed_tags );
@@ -387,6 +390,9 @@ class Metronet_Tag_Manager {
 			),
 			'script'   => array(
 				'data-cfasync' => true
+			),
+			'style' => array(
+				
 			)
 		);
 		$gtm_code = wp_kses( $gtm_code, $allowed_tags );
@@ -566,6 +572,9 @@ class Metronet_Tag_Manager {
 				),
 				'script'   => array(
 					'data-cfasync' => true
+				),
+				'style' => array(
+				
 				)
 			);
 			$gtm_code = $_POST[ 'gtm-code' ];
