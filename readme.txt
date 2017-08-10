@@ -3,7 +3,7 @@ Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
 Tested up to: 4.8
-Stable tag: 1.2.1
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -78,6 +78,10 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 == Changelog ==
 
+= 1.2.3 =
+* Updated 2017-08-10
+* Adding style element support
+
 = 1.2.1 =
 * Updated 2017-05-02
 * Code cleanup and remediation by 10up
@@ -129,8 +133,8 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 == Upgrade Notice ==
 
-= 1.2.1 =
-Code cleanup and remediation by 10up.
+= 1.2.3 =
+Style attribute addition.
 
 == Filtering Variables ==
 
