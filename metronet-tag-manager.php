@@ -634,7 +634,7 @@ class Metronet_Tag_Manager {
 			echo '<div class="updated"><p>';
 			esc_html_e( "Google recommends that the Google Tag Manager script is loaded straight after the opening <body> tag. For this to work, you will need to add the following piece of code into your template file just after the <body> tag: <?php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at the bottom of your site and might not track the way you want it to.", 'metronet-tag-manager' );
 			echo '&nbsp;';
-			printf( esc_html__( '<a href="%s">View the Quickstart Guide</a>.', 'metronet-tag-manager' ), 'https://developers.google.com/tag-manager/quickstart' );
+			printf( '<a href="%s">%s</a>', esc_url( 'https://developers.google.com/tag-manager/quickstart' ), esc_html__( 'View the Quickstart Guide', 'metronet-tag-manager' ) );
 			echo '</p></div>';
 		}
 		?>
@@ -653,7 +653,7 @@ class Metronet_Tag_Manager {
 				<th scope="row"><?php esc_html_e( 'Post/Page Variables', 'metronet-tag-manager' ); ?></th>
 				<td>
 					<p><?php esc_html_e( 'Add global variables and set defaults to show on posts, pages, and custom post types.  You can configure or overwrite these on a per-post basis by viewing a post.', 'metronet-tag-manager' ); ?></p>
-					<p><?php printf( 'To see some examples, please visit the <a href="%s">Google Tag Manager Reference</a>.', 'https://developers.google.com/tag-manager/reference' );?></p>
+					<p><?php printf( '%s <a href="%s">%s</a>.', esc_html__( 'To see some examples, please visit the', 'metronet-tag-manager' ), esc_url( 'https://developers.google.com/tag-manager/reference' ), esc_html__( 'Google Tag Manager Reference', 'metronet-tag-manager' ) );?></p>
 					<?php $this->output_variables_to_edit( $gtm_vars, 'tag_manager' ); ?>
 				</td>
 			</tr>
@@ -661,7 +661,7 @@ class Metronet_Tag_Manager {
 				<th scope="row"><?php esc_html_e( 'External Variables', 'metronet-tag-manager' ); ?></th>
 				<td>
 					<p><?php esc_html_e( 'Add global variables that will show on all pages except posts, pages, or custom post types.', 'metronet-tag-manager' ); ?></p>
-					<p><?php printf( esc_html__( 'To see some examples, please visit the <a href="%s">Google Tag Manager Reference</a>.', 'metronet-tag-manager' ), 'https://developers.google.com/tag-manager/reference' );?></p>
+					<p><?php printf( '%s <a href="%s">%s</a>.', esc_html__( 'To see some examples, please visit the', 'metronet-tag-manager' ), esc_url( 'https://developers.google.com/tag-manager/reference' ), esc_html__( 'Google Tag Manager Reference', 'metronet-tag-manager' ) );?></p>
 					<?php $this->output_variables_to_edit( $gtm_external_vars, 'external_tag_manager' ); ?>
 				</td>
 			</tr>
