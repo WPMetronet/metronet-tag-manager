@@ -549,6 +549,7 @@ class Metronet_Tag_Manager {
 		if ( isset( $_POST[ 'reset' ] ) || isset( $_POST[ 'submit' ] ) ) {
 			if ( !wp_verify_nonce( $_REQUEST[ '_metronet' ], 'save_metronet_settings_tags' ) ) {
 				echo sprintf( '<div class="error"><p><strong>%s</strong></p></div>', esc_html__( 'This request cannot be verified', 'metronet-tag-manager' ) );
+					die( '' );
 			} else {
 				//A little early, but who cares?
 				echo sprintf( '<div class="updated"><p><strong>%s</strong></p></div>', esc_html__( 'Settings saved', 'metronet-tag-manager' ) );
