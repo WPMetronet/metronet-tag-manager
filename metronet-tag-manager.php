@@ -4,7 +4,7 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
-Version: 1.2.9
+Version: 1.3.0
 Requires at least: 4.2
 Author URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
 Text Domain: metronet-tag-manager
@@ -368,6 +368,7 @@ class Metronet_Tag_Manager {
 			)
 		);
 		$gtm_code = wp_kses( $gtm_code, $allowed_tags );
+		$gtm_code = str_replace( '&amp;', '&', $gtm_code );
 		remove_filter( 'safe_style_css', array( $this, 'safe_css' ) );
 		echo $gtm_code;
 		
@@ -396,6 +397,7 @@ class Metronet_Tag_Manager {
 			)
 		);
 		$gtm_code = wp_kses( $gtm_code, $allowed_tags );
+		$gtm_code = str_replace( '&amp;', '&', $gtm_code );
 		remove_filter( 'safe_style_css', array( $this, 'safe_css' ) );
 		echo $gtm_code;
 		
@@ -581,7 +583,9 @@ class Metronet_Tag_Manager {
 			$gtm_code = $_POST[ 'gtm-code' ];
 			$gtm_code_head = $_POST[ 'gtm-code-head' ];
 			$gtm_code_head = wp_kses( $gtm_code_head, $allowed_tags );
+			$gtm_code_head = str_replace( '&amp;', '&', $gtm_code_head );
 			$gtm_code = wp_kses( $gtm_code, $allowed_tags );
+			$gtm_code = str_replace( '&amp;', '&', $gtm_code );
 			remove_filter( 'safe_style_css', array( $this, 'safe_css' ) );
 			$this->admin_options[ 'code' ] = $gtm_code;
 			$this->admin_options[ 'code_head' ] = $gtm_code_head;

@@ -78,9 +78,13 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 == Changelog ==
 
+= 1.3.0 =
+* Released 2018-07-17
+* Fixed a bug when saving and outputting Google Tag Manager snippets where an ampersand HTML entity was added to the output.
+
 = 1.2.9 =
 * Released 2018-04-24
-Fixed serious security issue. Please Update.
+* Fixed serious security issue. Please Update.
 
 = 1.2.7 =
 * Released 2017-11-15
