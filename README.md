@@ -13,15 +13,15 @@ Installation
 
 FAQ
 -----------------------
-###What is Google Tag Manager###
+### What is Google Tag Manager
 
 Please refer to the <a href="http://www.google.com/tagmanager/faq.html">Google Tag Manager FAQ</a>.
 
-###What are dataLayer variables?###
+### What are dataLayer variables?
 
 Please refer to the <a href="https://developers.google.com/tag-manager/reference">Google Tag Manager API</a> reference.
 
-###What are dataLayer variables used for?###
+### What are dataLayer variables used for?
 
 The data layer is an object that contains the information that you want to pass to Google Tag Manager. By setting up rules in Google Tag Manager, these variables can then be used to include the correct snippets or scripts – for example when a certain button is clicked.
 

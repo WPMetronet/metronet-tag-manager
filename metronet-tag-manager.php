@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: Metronet Tag Manager
-Plugin URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
+Plugin URI: https://wordpress.org/plugins/metronet-profile-picture/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
 Version: 1.3.0
 Requires at least: 4.2
-Author URI: http://wordpress.org/extend/plugins/metronet-tag-manager/
+Author URI: https://mediaron.com
 Text Domain: metronet-tag-manager
 Domain Path: /languages
 Contributors: ronalfy,pereirinha
