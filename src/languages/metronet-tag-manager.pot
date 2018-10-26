@@ -17,91 +17,99 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/metronet-tag-manager.php:50, src/metronet-tag-manager.php:57
+#: src/js/gutenberg/link.js:60
+msgid "Hello world"
+msgstr ""
+
+#: src/js/gutenberg/main.js:43
+msgid "DataLayer Link"
+msgstr ""
+
+#: src/metronet-tag-manager.php:52, src/metronet-tag-manager.php:59
 msgid "Settings"
 msgstr ""
 
-#: src/metronet-tag-manager.php:416
+#: src/metronet-tag-manager.php:457
 msgid "Name: "
 msgstr ""
 
-#: src/metronet-tag-manager.php:417
+#: src/metronet-tag-manager.php:458
 msgid "Value: "
 msgstr ""
 
-#: src/metronet-tag-manager.php:417, src/metronet-tag-manager.php:417, src/metronet-tag-manager.php:417, src/metronet-tag-manager.php:436
+#: src/metronet-tag-manager.php:458, src/metronet-tag-manager.php:458, src/metronet-tag-manager.php:458, src/metronet-tag-manager.php:477
 msgid "Delete"
 msgstr ""
 
-#: src/metronet-tag-manager.php:434
+#: src/metronet-tag-manager.php:475
 msgid "Name"
 msgstr ""
 
-#: src/metronet-tag-manager.php:435, src/tinyMCE/addparams.php:70
+#: src/metronet-tag-manager.php:476, src/tinyMCE/addparams.php:70
 msgid "Value"
 msgstr ""
 
-#: src/metronet-tag-manager.php:553
+#: src/metronet-tag-manager.php:594
 msgid "This request cannot be verified"
 msgstr ""
 
-#: src/metronet-tag-manager.php:557
+#: src/metronet-tag-manager.php:598
 msgid "Settings saved"
 msgstr ""
 
-#: src/metronet-tag-manager.php:640
+#: src/metronet-tag-manager.php:681
 msgid "Google recommends that the Google Tag Manager script is loaded straight after the opening <body> tag. For this to work, you will need to add the following piece of code into your template file just after the <body> tag: <?php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at the bottom of your site and might not track the way you want it to."
 msgstr ""
 
-#: src/metronet-tag-manager.php:642
+#: src/metronet-tag-manager.php:683
 msgid "View the Quickstart Guide"
 msgstr ""
 
-#: src/metronet-tag-manager.php:648
+#: src/metronet-tag-manager.php:689
 msgid "Google Tag Manager Code"
 msgstr ""
 
-#: src/metronet-tag-manager.php:650
+#: src/metronet-tag-manager.php:691
 msgid "You can view your Container Snippet by logging into Google Tag Manager, clicking Workspace, and clicking on your GTM-XXXXX code."
 msgstr ""
 
-#: src/metronet-tag-manager.php:651
+#: src/metronet-tag-manager.php:692
 msgid "Paste your Google Tag Manager code here, which will appear in the <head> portion of your site:"
 msgstr ""
 
-#: src/metronet-tag-manager.php:653
+#: src/metronet-tag-manager.php:694
 msgid "Paste your Google Tag Manager code here, which will ideally appear after the opening <body> tag:"
 msgstr ""
 
-#: src/metronet-tag-manager.php:658
+#: src/metronet-tag-manager.php:699
 msgid "Post/Page Variables"
 msgstr ""
 
-#: src/metronet-tag-manager.php:660
+#: src/metronet-tag-manager.php:701
 msgid "Add global variables and set defaults to show on posts, pages, and custom post types.  You can configure or overwrite these on a per-post basis by viewing a post."
 msgstr ""
 
-#: src/metronet-tag-manager.php:661, src/metronet-tag-manager.php:669
+#: src/metronet-tag-manager.php:702, src/metronet-tag-manager.php:710
 msgid "To see some examples, please visit the"
 msgstr ""
 
-#: src/metronet-tag-manager.php:661, src/metronet-tag-manager.php:669
+#: src/metronet-tag-manager.php:702, src/metronet-tag-manager.php:710
 msgid "Google Tag Manager Reference"
 msgstr ""
 
-#: src/metronet-tag-manager.php:666
+#: src/metronet-tag-manager.php:707
 msgid "External Variables"
 msgstr ""
 
-#: src/metronet-tag-manager.php:668
+#: src/metronet-tag-manager.php:709
 msgid "Add global variables that will show on all pages except posts, pages, or custom post types."
 msgstr ""
 
-#: src/metronet-tag-manager.php:674
+#: src/metronet-tag-manager.php:715
 msgid "Reset to Defaults"
 msgstr ""
 
-#: src/metronet-tag-manager.php:674
+#: src/metronet-tag-manager.php:715
 msgid "Save Changes"
 msgstr ""
 
