@@ -10,6 +10,7 @@
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const { InnerBlocks } = wp.editor;
 
 // Import CSS
 //import './styles/style.scss';
@@ -42,16 +43,21 @@ export const name = 'mtmdl/link';
 registerBlockType( 'mtmdl/link', { // Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'DataLayer Link', 'metronet-tag-manager' ), // Block title.
 	icon: 'admin-links',
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-
-	getEditWrapperProps( attributes ) {
-
-	},
-
-	edit: link,
-
-	// Render via PHP
-	save() {
-		return null;
-	},
+	category: 'common',
+	parent: ['core/paragraph'],
+	edit: (className) => {
+		return(
+			<div className={ className }>
+				<InnerBlocks />
+			</div>
+		)
+	}
+	,
+	save: () => {
+		return (
+			<div>
+				<InnerBlocks.Content />
+			</div>
+		);
+	}
 } );

@@ -56,9 +56,7 @@ class MTM_Gutenberg extends Component {
 		
 		return(
 			<Fragment>
-				<Placeholder>
-					{__('Hello world', 'metronet-tag-manager')}
-				</Placeholder>
+				Hello World
 			</Fragment>
 		)
 	}
