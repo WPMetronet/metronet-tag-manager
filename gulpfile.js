@@ -117,8 +117,8 @@ gulp.task('pot', function () {
 	.pipe(plumber(reportError))
 	.pipe(sort())
 	.pipe(wpPot({
-		domain: 'metronget-tag-manager',
-		destFile:'metronget-tag-manager.pot',
+		domain: 'metronet-tag-manager',
+		destFile:'metronet-tag-manager.pot',
 		package: 'Metronet Tag Manager',
 		bugReport: 'https://wordpress.org/plugins/metronet-tag-manager/',
 		lastTranslator: 'Ronald Huerca <ronald@mediaron.com>',
