@@ -17,11 +17,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/js/gutenberg/link.js:60
-msgid "Hello world"
-msgstr ""
-
-#: src/js/gutenberg/main.js:43
+#: src/js/gutenberg/main.js:44
 msgid "DataLayer Link"
 msgstr ""
 
