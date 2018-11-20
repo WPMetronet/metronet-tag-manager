@@ -1,14 +1,22 @@
-const { registerBlockType } = wp.blocks;
+
+const { ToolbarButton, Toolbar } = wp.components;
 const { __, _x } = wp.i18n;
-import paragraph from './paragraph.js';
-registerBlockType( 'mtmdl/paragraph', {
-	title: __( 'DataLayer Paragraph', 'metronet-tag-manager' ), // Block title.
-	icon: 'admin-links',
-	category: 'common',
-	edit: paragraph,
-	save: () => {
+const {registerFormatType, insertObject } = wp.richText;
+const { Fragment } = wp.element;
+export default registerFormatType( 'mtmdl/insert', {
+	selector: 'a',
+	title: __('DataLayer', 'metronet-tag-manager'),
+	tagName: 'a',
+	className: 'mtmdl',
+	edit( { isActive } ) {
 		return (
-			null
+			<ToolbarButton
+				icon="editor-bold"
+				title={ __( 'DataLayer' ) }
+			/>
 		);
+	},
+	save() {
+		return null;
 	}
 } );
