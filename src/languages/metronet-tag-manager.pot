@@ -17,10 +17,6 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/js/gutenberg/main.js:8
-msgid "DataLayer"
-msgstr ""
-
 #: src/metronet-tag-manager.php:53, src/metronet-tag-manager.php:60
 msgid "Settings"
 msgstr ""

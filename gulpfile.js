@@ -85,6 +85,10 @@ var cssPaths = [
 	'src/css/*.css'
 ];
 
+var tinyMCE = [
+	'src/tinyMCE/**/*'
+];
+
 var htmlPaths = [
 	'src/**/*.html'
 ];
@@ -110,6 +114,12 @@ gulp.copy = function (src, dest) {
 		.pipe(plumber(reportError))
 		.pipe(gulp.dest(dest));
 };
+
+gulp.task('tinyMCE', function(){
+	return gulp.src(tinyMCE)
+	.pipe(plumber(reportError))
+	.pipe(gulp.dest('dist/tinyMCE'));
+});
 
 /* ==Translations=== */
 gulp.task('pot', function () {
@@ -420,7 +430,7 @@ gulp.task('clean_build', function () {
 gulp.task('build', function (done) {
 	runSequence(['clean'],
 		['build_type'],
-		['imgs_move', 'misc_move', 'html_move', 'php_move', 'scss_compile', 'css_move', 'css_min'],
+		['imgs_move', 'misc_move', 'html_move', 'php_move', 'scss_compile', 'css_move', 'css_min', 'tinyMCE'],
 		['gutenberg', 'gutenbergmin'],
 		['babel', 'babel_min'],
 		['check_upgrade_notice'],
