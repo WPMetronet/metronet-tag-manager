@@ -1,6 +1,6 @@
 const { PanelBody, PanelRow, TextControl, Popover, Button } = wp.components;
 const { __, _x } = wp.i18n;
-const {registerFormatType, getActiveFormat, applyFormat, toggleFormat } = wp.richText;
+const {registerFormatType, getActiveFormat, applyFormat, toggleFormat } = window.wp.richText;
 const { Fragment, Component } = wp.element;
 const {
 	InspectorControls,
@@ -10,13 +10,13 @@ const {
 	AlignmentToolbar,
 	PanelColorSettings,
 	RichTextToolbarButton,
-} = wp.editor;
-const type = `mtm/link`;
-wp.richText.registerFormatType( 'mtm/link', {
+} = window.wp.editor;
+registerFormatType( 'mtm/link', {
 	title: __( 'Datalayer Link', 'metronet-tag-manager' ),
 	tagName: 'a',
 	attributes: {
 		url: 'href',
+		title: 'title'
 	},
 	className: 'mtm-dl-link',
 	edit: class MTMDLEdit extends Component {
@@ -30,6 +30,16 @@ wp.richText.registerFormatType( 'mtm/link', {
 			};
 		}
 		onClick = (e) => {
+			console.log(e);
+			console.log(this.props);
+			if( this.props.value.start == this.props.value.end ) {
+				this.setState(
+					{
+						modal: false
+					}
+				);
+				return;
+			}
 			if ( this.state.modal == false ) {
 				this.setState(
 					{
@@ -63,11 +73,26 @@ wp.richText.registerFormatType( 'mtm/link', {
 		onCancel = () => {
 			this.setState( { modal: false } );
 		}
+		onSave = () => {
+			this.setState( { modal: false } );
+			console.log(this.props);
+			applyFormat( 
+				this.props.value, 
+				{
+					type: 'mtm/link',
+					attributes: {
+						url: this.state.url,
+						title: this.state.title
+					}
+				},
+				this.props.value.start,
+				this.props.value.end
+			); 
+		}
 		render() {
 			let {
 				activeAttributes
 			} = this.props;
-			console.log(this.props);
 			return (
 				<Fragment>
 					<RichTextToolbarButton
@@ -75,7 +100,7 @@ wp.richText.registerFormatType( 'mtm/link', {
 						title={__('Datalayer Link', 'metronet-tag-manager')}
 						onClick={this.onClick}
 					/>
-					{this.state.modal && 
+					{this.state.modal && this.props.value.start != this.props.value.end &&
 						<Fragment>
 							<Popover position="bottom" noArrow>
 								<div className="mtm-datalayer-input">
@@ -97,7 +122,7 @@ wp.richText.registerFormatType( 'mtm/link', {
 									<Button isPrimary={false} isSmall={true} onClick={this.onCancel}>
 										{__('Cancel', 'metronet-tag-manager')}
 									</Button>
-									<Button className="alignright" isPrimary={true} isSmall={true}>
+									<Button className="alignright" isPrimary={true} isSmall={true} onClick={this.onSave}>
 										{__('Save', 'metronet-tag-manager')}
 									</Button>
 								</div>
