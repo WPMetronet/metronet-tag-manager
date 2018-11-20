@@ -1,6 +1,6 @@
-const { PanelBody, PanelRow } = wp.components;
+const { PanelBody, PanelRow, TextControl, Popover, Button } = wp.components;
 const { __, _x } = wp.i18n;
-const {registerFormatType, insertObject } = wp.richText;
+const {registerFormatType, getActiveFormat, applyFormat, toggleFormat } = wp.richText;
 const { Fragment, Component } = wp.element;
 const {
 	InspectorControls,
@@ -9,8 +9,9 @@ const {
 	RichText,
 	AlignmentToolbar,
 	PanelColorSettings,
+	RichTextToolbarButton,
 } = wp.editor;
-
+const type = `mtm/link`;
 wp.richText.registerFormatType( 'mtm/link', {
 	title: __( 'Datalayer Link', 'metronet-tag-manager' ),
 	tagName: 'a',
@@ -18,15 +19,93 @@ wp.richText.registerFormatType( 'mtm/link', {
 		url: 'href',
 	},
 	className: 'mtm-dl-link',
-	edit: function( props ) {
-		return (
-			<InspectorControls>
-				<PanelBody title={ __( 'Datalayer', 'metronet-tag-manager' ) } initialOpen={ false }>
-					<PanelRow>
-						<label>{__( 'URL', 'metronet-tag-manager' )}<br /><input type="text" /></label>
-					</PanelRow>
-				</PanelBody>
-			</InspectorControls>
-		)
+	edit: class MTMDLEdit extends Component {
+		constructor( props ) {
+			super( ...props );
+			this.state = {
+				modal: false,
+				url: (undefined == props.activeAttributes.url) ? '' : props.activeAttributes.url,
+				title: '',
+				is_active: props.isActive,
+			};
+		}
+		onClick = (e) => {
+			if ( this.state.modal == false ) {
+				this.setState(
+					{
+						modal: true
+					}
+				);
+			} else {
+				this.setState(
+					{
+						modal: false
+					}
+				);
+			}
+		}
+		onURLChange = (text) => {
+			this.props.activeAttributes.url = text;
+			this.setState(
+				{
+					url: text
+				}
+			);
+		}
+		onTitleChange = (text) => {
+			this.props.activeAttributes.title = text;
+			this.setState(
+				{
+					title: text
+				}
+			);
+		}
+		onCancel = () => {
+			this.setState( { modal: false } );
+		}
+		render() {
+			let {
+				activeAttributes
+			} = this.props;
+			console.log(this.props);
+			return (
+				<Fragment>
+					<RichTextToolbarButton
+						icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>}
+						title={__('Datalayer Link', 'metronet-tag-manager')}
+						onClick={this.onClick}
+					/>
+					{this.state.modal && 
+						<Fragment>
+							<Popover position="bottom" noArrow>
+								<div className="mtm-datalayer-input">
+									<h2>{__('Datalayer Variables', 'metronet-tag-manager')}</h2>
+									<TextControl
+										label={__('Selected Text', 'metronet-tag-manager')}
+										value={ this.props.value.text.slice( this.props.value.start, this.props.value.end ) } 
+									/>
+									<TextControl
+										label={__('Enter Title', 'metronet-tag-manager')}
+										value={this.state.title} 
+										onChange={ (text) => this.onTitleChange(text) }
+									/>
+									<TextControl
+										label={__('Enter URL', 'metronet-tag-manager')}
+										value={ this.state.url } 
+										onChange={ (text) => this.onURLChange(text) }
+									/>
+									<Button isPrimary={false} isSmall={true} onClick={this.onCancel}>
+										{__('Cancel', 'metronet-tag-manager')}
+									</Button>
+									<Button className="alignright" isPrimary={true} isSmall={true}>
+										{__('Save', 'metronet-tag-manager')}
+									</Button>
+								</div>
+							</Popover>
+						</Fragment>
+					}
+				</Fragment>
+			)
+		}
 	}
 } );

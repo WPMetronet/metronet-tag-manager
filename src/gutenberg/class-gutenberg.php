@@ -71,6 +71,8 @@ class Metronet_Tag_Manager_Gutenberg {
 				'rest_url' => esc_url(rest_url()),
 			)
 		);
+
+		wp_enqueue_style('mtm_gutenberg', Metronet_Tag_Manager::get_plugin_url('css/gutenberg'.$min_or_not.'.css'), array(), METRONET_TAG_MANAGER_VERISON, 'all' );
 	}
 
 	public function add_gutenberg_styles() {
