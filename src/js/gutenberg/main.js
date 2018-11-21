@@ -1,4 +1,4 @@
-const { PanelBody, PanelRow, TextControl, Popover, Button } = wp.components;
+const { PanelBody, PanelRow, TextControl, Popover, Button, withSpokenMessages } = wp.components;
 const { __, _x } = wp.i18n;
 const {registerFormatType, getActiveFormat, applyFormat, toggleFormat } = window.wp.richText;
 const { Fragment, Component } = wp.element;
@@ -19,19 +19,18 @@ registerFormatType( 'mtm/link', {
 		title: 'title'
 	},
 	className: 'mtm-dl-link',
-	edit: class MTMDLEdit extends Component {
-		constructor( props ) {
-			super( ...props );
+	edit: withSpokenMessages( class MTMDLEdit extends Component {
+		constructor() {
+			super( ...arguments );
+			console.log(arguments);
 			this.state = {
 				modal: false,
-				url: (undefined == props.activeAttributes.url) ? '' : props.activeAttributes.url,
+				url: '',
 				title: '',
-				is_active: props.isActive,
+				is_active: true,
 			};
 		}
-		onClick = (e) => {
-			console.log(e);
-			console.log(this.props);
+		onClick = () => {
 			if( this.props.value.start == this.props.value.end ) {
 				this.setState(
 					{
@@ -76,7 +75,7 @@ registerFormatType( 'mtm/link', {
 		onSave = () => {
 			this.setState( { modal: false } );
 			console.log(this.props);
-			applyFormat( 
+			this.props.onChange( applyFormat( 
 				this.props.value, 
 				{
 					type: 'mtm/link',
@@ -87,7 +86,7 @@ registerFormatType( 'mtm/link', {
 				},
 				this.props.value.start,
 				this.props.value.end
-			); 
+			) ); 
 		}
 		render() {
 			let {
@@ -132,5 +131,5 @@ registerFormatType( 'mtm/link', {
 				</Fragment>
 			)
 		}
-	}
+	} )
 } );
