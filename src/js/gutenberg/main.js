@@ -1,6 +1,6 @@
 const { PanelBody, PanelRow, TextControl, Popover, Button, withSpokenMessages } = wp.components;
 const { __, _x } = wp.i18n;
-const {registerFormatType, getActiveFormat, applyFormat, toggleFormat } = window.wp.richText;
+const {registerFormatType, getActiveFormat, applyFormat, toggleFormat, removeFormat } = window.wp.richText;
 const { Fragment, Component } = wp.element;
 const {
 	InspectorControls,
@@ -22,7 +22,6 @@ registerFormatType( 'mtm/link', {
 	edit: withSpokenMessages( class MTMDLEdit extends Component {
 		constructor() {
 			super( ...arguments );
-			console.log(arguments);
 			this.state = {
 				modal: false,
 				url: '',
@@ -31,6 +30,13 @@ registerFormatType( 'mtm/link', {
 			};
 		}
 		onClick = () => {
+			if ( this.props.isActive ) {
+				this.props.onChange( removeFormat( 
+					this.props.value, 
+					'mtm/link'
+				) );
+				return;
+			}
 			if( this.props.value.start == this.props.value.end ) {
 				this.setState(
 					{
@@ -74,7 +80,6 @@ registerFormatType( 'mtm/link', {
 		}
 		onSave = () => {
 			this.setState( { modal: false } );
-			console.log(this.props);
 			this.props.onChange( applyFormat( 
 				this.props.value, 
 				{
@@ -83,9 +88,7 @@ registerFormatType( 'mtm/link', {
 						url: this.state.url,
 						title: this.state.title
 					}
-				},
-				this.props.value.start,
-				this.props.value.end
+				}
 			) ); 
 		}
 		render() {
