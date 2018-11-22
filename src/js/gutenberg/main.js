@@ -26,7 +26,6 @@ registerFormatType( 'mtm/link', {
 				modal: false,
 				url: '',
 				title: '',
-				is_active: true,
 			};
 		}
 		onClick = () => {
@@ -37,7 +36,7 @@ registerFormatType( 'mtm/link', {
 				) );
 				return;
 			}
-			if( this.props.value.start == this.props.value.end ) {
+			if( this.props.value.start == this.props.value.end && !this.props.isActive) {
 				this.setState(
 					{
 						modal: false
@@ -45,16 +44,27 @@ registerFormatType( 'mtm/link', {
 				);
 				return;
 			}
-			if ( this.state.modal == false ) {
+			let url = '';
+			let title = '';
+			if ( this.state.modal == false || this.props.isActive ) {
+				let format = getActiveFormat(this.props.value, 'mtm/link');
+				if ( undefined != format ) {
+					url = format.attributes.url;
+					title = format.attributes.title;
+				}
 				this.setState(
 					{
-						modal: true
+						modal: true,
+						url: url,
+						title: title
 					}
 				);
 			} else {
 				this.setState(
 					{
-						modal: false
+						modal: false,
+						url: url,
+						title: title
 					}
 				);
 			}
@@ -92,9 +102,14 @@ registerFormatType( 'mtm/link', {
 			) ); 
 		}
 		render() {
-			let {
-				activeAttributes
-			} = this.props;
+			let isActive = this.props.isActive;
+			let format = getActiveFormat(this.props.value, 'mtm/link');
+			let renderModal = false;
+			if ( ( this.state.modal && this.props.value.start != this.props.value.end ) || ( isActive && undefined !== format ) ) {
+				renderModal = true;
+			} else {
+				renderModal = false;
+			}
 			return (
 				<Fragment>
 					{false === this.props.isActive &&
@@ -111,23 +126,19 @@ registerFormatType( 'mtm/link', {
 							onClick={this.onClick}
 						/>
 					}
-					{this.state.modal && this.props.value.start != this.props.value.end &&
+					{renderModal &&
 						<Fragment>
 							<Popover position="bottom" noArrow>
 								<div className="mtm-datalayer-input">
 									<h2>{__('Datalayer Variables', 'metronet-tag-manager')}</h2>
 									<TextControl
-										label={__('Selected Text', 'metronet-tag-manager')}
-										value={ this.props.value.text.slice( this.props.value.start, this.props.value.end ) } 
-									/>
-									<TextControl
 										label={__('Enter Title', 'metronet-tag-manager')}
-										value={this.state.title} 
+										value={undefined !== format ? format.attributes.title : this.state.title} 
 										onChange={ (text) => this.onTitleChange(text) }
 									/>
 									<TextControl
 										label={__('Enter URL', 'metronet-tag-manager')}
-										value={ this.state.url } 
+										value={ undefined !== format ? format.attributes.url : this.state.url } 
 										onChange={ (text) => this.onURLChange(text) }
 									/>
 									<Button isPrimary={false} isSmall={true} onClick={this.onCancel}>
