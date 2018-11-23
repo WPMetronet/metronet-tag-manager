@@ -1,4 +1,4 @@
-const { PanelBody, PanelRow, TextControl, Popover, Button, withSpokenMessages } = wp.components;
+const { PanelBody, PanelRow, TextControl, Popover, Button, CheckBoxControl, withSpokenMessages } = wp.components;
 const { __, _x } = wp.i18n;
 const {registerFormatType, getActiveFormat, applyFormat, toggleFormat, removeFormat } = window.wp.richText;
 const { Fragment, Component } = wp.element;
@@ -16,7 +16,10 @@ registerFormatType( 'mtm/link', {
 	tagName: 'a',
 	attributes: {
 		url: 'href',
-		title: 'title'
+		title: 'title',
+		id: 'id',
+		class: 'class',
+
 	},
 	className: 'mtm-dl-link',
 	edit: withSpokenMessages( class MTMDLEdit extends Component {
@@ -26,6 +29,8 @@ registerFormatType( 'mtm/link', {
 				modal: false,
 				url: '',
 				title: '',
+				id: '',
+				classname: '',
 			};
 		}
 		onClick = () => {
@@ -46,17 +51,23 @@ registerFormatType( 'mtm/link', {
 			}
 			let url = '';
 			let title = '';
+			let id = '';
+			let classname = '';
 			if ( this.state.modal == false || this.props.isActive ) {
 				let format = getActiveFormat(this.props.value, 'mtm/link');
 				if ( undefined != format ) {
 					url = format.attributes.url;
 					title = format.attributes.title;
+					id = format.attributes.id;
+					classname = format.attributes.class;
 				}
 				this.setState(
 					{
 						modal: true,
 						url: url,
-						title: title
+						title: title,
+						id: id,
+						classname: classname
 					}
 				);
 			} else {
@@ -64,13 +75,14 @@ registerFormatType( 'mtm/link', {
 					{
 						modal: false,
 						url: url,
-						title: title
+						title: title,
+						id: id,
+						classname: classname,
 					}
 				);
 			}
 		}
 		onURLChange = (text) => {
-			this.props.activeAttributes.url = text;
 			this.setState(
 				{
 					url: text
@@ -78,7 +90,6 @@ registerFormatType( 'mtm/link', {
 			);
 		}
 		onTitleChange = (text) => {
-			this.props.activeAttributes.title = text;
 			this.setState(
 				{
 					title: text
@@ -95,17 +106,35 @@ registerFormatType( 'mtm/link', {
 					type: 'mtm/link',
 					attributes: {
 						url: this.state.url,
-						title: this.state.title
+						title: this.state.title,
+						id: this.state.id,
+						class: this.state.classname,
 					}
 				}
 			) ); 
+		}
+		onIDChange = ( text ) => {
+			this.setState(
+				{
+					id: text
+				}
+			);
+		}
+		onClassChange = ( text ) => {
+			this.setState(
+				{
+					classname: text
+				}
+			);
 		}
 		onEdit = () => {
 			let format = getActiveFormat(this.props.value, 'mtm/link');
 			if ( undefined !== format ) {
 				this.state = {
-					url: format.attributes.url,
-					title: format.attributes.title,
+					url: (format.attributes.url != this.state.url && '' == this.state.url) ? format.attributes.url : this.state.url,
+					title: (format.attributes.title != this.state.title && '' == this.state.title) ? format.attributes.title : this.state.title,
+					classname: (format.attributes.class != this.state.classname && '' == this.state.classname ) ? format.attributes.class : this.state.classname,
+					id: (format.attributes.id != this.state.id && '' == this.state.id ) ? format.attributes.id : this.state.id,
 				};
 			} 
 			this.props.onChange( applyFormat( 
@@ -114,7 +143,9 @@ registerFormatType( 'mtm/link', {
 					type: 'mtm/link',
 					attributes: {
 						url: this.state.url,
-						title: this.state.title
+						title: this.state.title,
+						id: this.state.id,
+						class: this.state.classname,
 					}
 				}
 			) ); 
@@ -138,20 +169,18 @@ registerFormatType( 'mtm/link', {
 			}
 			let url = '';
 			let title = '';
-			if( undefined !== format ) {
-				if ( this.state.title !== format.attributes.title && '' !== this.state.title ) {
-					title = this.state.title;
-				} else {
-					title = format.attributes.title;
-				}
-				if ( this.state.url !== format.attributes.url && '' !== this.state.url ) {
-					url = this.state.url;
-				} else {
-					url = format.attributes.url;
-				}
+			let classname = '';
+			let id = '';
+			if( undefined !== format && this.props.isActive ) {
+				url = (format.attributes.url != this.state.url && '' == this.state.url) ? format.attributes.url : this.state.url;
+				title = (format.attributes.title != this.state.title && '' == this.state.title) ? format.attributes.title : this.state.title;
+				classname = (format.attributes.class != this.state.classname && '' == this.state.classname ) ? format.attributes.class : this.state.classname;
+				id = (format.attributes.id != this.state.id && '' == this.state.id ) ? format.attributes.id : this.state.id;
 			} else {
 				url = this.state.url;
 				title = this.state.title;
+				id = this.state.id;
+				classname = this.state.classname;
 			}
 			return (
 				<Fragment>
@@ -183,6 +212,16 @@ registerFormatType( 'mtm/link', {
 										label={__('Enter URL', 'metronet-tag-manager')}
 										value={url} 
 										onChange={ (text) => this.onURLChange(text) }
+									/>
+									<TextControl
+										label={__('Enter ID', 'metronet-tag-manager')}
+										value={id} 
+										onChange={ (text) => this.onIDChange(text) }
+									/>
+									<TextControl
+										label={__('Enter Class Name', 'metronet-tag-manager')}
+										value={classname} 
+										onChange={ (text) => this.onClassChange(text) }
 									/>
 									{!isActive &&
 									<Fragment>
