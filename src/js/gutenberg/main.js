@@ -89,7 +89,6 @@ registerFormatType( 'mtm/link', {
 			this.setState( { modal: false } );
 		}
 		onSave = () => {
-			this.setState( { modal: false } );
 			this.props.onChange( applyFormat( 
 				this.props.value, 
 				{
@@ -100,6 +99,26 @@ registerFormatType( 'mtm/link', {
 					}
 				}
 			) ); 
+		}
+		onEdit = () => {
+			this.props.onChange( applyFormat( 
+				this.props.value, 
+				{
+					type: 'mtm/link',
+					attributes: {
+						url: this.state.url,
+						title: this.state.title
+					}
+				}
+			) ); 
+		}
+		onRemove = () => {
+			this.props.onChange( removeFormat( 
+				this.props.value, 
+				'mtm/link'
+			) );
+			this.setState( { modal: false } );
+			return;
 		}
 		render() {
 			let isActive = this.props.isActive;
@@ -141,12 +160,26 @@ registerFormatType( 'mtm/link', {
 										value={ undefined !== format ? format.attributes.url : this.state.url } 
 										onChange={ (text) => this.onURLChange(text) }
 									/>
-									<Button isPrimary={false} isSmall={true} onClick={this.onCancel}>
-										{__('Cancel', 'metronet-tag-manager')}
-									</Button>
-									<Button className="alignright" isPrimary={true} isSmall={true} onClick={this.onSave}>
-										{__('Save', 'metronet-tag-manager')}
-									</Button>
+									{!isActive &&
+									<Fragment>
+										<Button isPrimary={false} isSmall={true} onClick={this.onCancel}>
+											{__('Cancel', 'metronet-tag-manager')}
+										</Button>
+										<Button className="alignright" isPrimary={true} isSmall={true} onClick={this.onSave}>
+											{__('Save', 'metronet-tag-manager')}
+										</Button>
+									</Fragment>
+									}
+									{isActive &&
+									<Fragment>
+										<Button isPrimary={false} isSmall={true} onClick={this.onRemove}>
+											{__('Remove', 'metronet-tag-manager')}
+										</Button>
+										<Button className="alignright" isPrimary={true} isSmall={true} onClick={this.onEdit}>
+											{__('Edit', 'metronet-tag-manager')}
+										</Button>
+									</Fragment>
+									}
 								</div>
 							</Popover>
 						</Fragment>
