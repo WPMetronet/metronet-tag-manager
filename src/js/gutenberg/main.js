@@ -101,6 +101,13 @@ registerFormatType( 'mtm/link', {
 			) ); 
 		}
 		onEdit = () => {
+			let format = getActiveFormat(this.props.value, 'mtm/link');
+			if ( undefined !== format ) {
+				this.state = {
+					url: format.attributes.url,
+					title: format.attributes.title,
+				};
+			} 
 			this.props.onChange( applyFormat( 
 				this.props.value, 
 				{
