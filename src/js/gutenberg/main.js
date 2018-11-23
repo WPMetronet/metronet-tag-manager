@@ -129,6 +129,23 @@ registerFormatType( 'mtm/link', {
 			} else {
 				renderModal = false;
 			}
+			let url = '';
+			let title = '';
+			if( undefined !== format ) {
+				if ( this.state.title !== format.attributes.title && '' !== this.state.title ) {
+					title = this.state.title;
+				} else {
+					title = format.attributes.title;
+				}
+				if ( this.state.url !== format.attributes.url && '' !== this.state.url ) {
+					url = this.state.url;
+				} else {
+					url = format.attributes.url;
+				}
+			} else {
+				url = this.state.url;
+				title = this.state.title;
+			}
 			return (
 				<Fragment>
 					{false === this.props.isActive &&
@@ -152,12 +169,12 @@ registerFormatType( 'mtm/link', {
 									<h2>{__('Datalayer Variables', 'metronet-tag-manager')}</h2>
 									<TextControl
 										label={__('Enter Title', 'metronet-tag-manager')}
-										value={undefined !== format ? format.attributes.title : this.state.title} 
+										value={title} 
 										onChange={ (text) => this.onTitleChange(text) }
 									/>
 									<TextControl
 										label={__('Enter URL', 'metronet-tag-manager')}
-										value={ undefined !== format ? format.attributes.url : this.state.url } 
+										value={url} 
 										onChange={ (text) => this.onURLChange(text) }
 									/>
 									{!isActive &&
