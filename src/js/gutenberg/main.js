@@ -184,33 +184,31 @@ registerFormatType( 'mtm/link', {
 				let target =  (format.attributes.target != this.state.target && '' == this.state.target ) ? format.attributes.target : this.state.target;
 				let dlparameter = (format.attributes.data_param != this.state.dlparameter && '' == this.state.dlparameter ) ? format.attributes.data_param : this.state.dlparameter;
 				let dlvalue = (format.attributes.data_value != this.state.dlvalue && '' == this.state.dlvalue ) ? format.attributes.data_value : this.state.dlvalue;
-				this.setState = ( 
-					{
+				this.setState = ( {
 					url: url,
 					title: title,
 					classname: classname,
 					id: id,
 					target: target,
 					dlparameter: dlparameter,
-					dlvalue: dlvalue,
-					},
-					this.props.onChange( applyFormat( 
-						this.props.value, 
-						{
-							type: 'mtm/link',
-							attributes: {
-								url: url,
-								title: title,
-								id: id,
-								class: classname,
-								target: 'none' == target ? '' : target,
-								data_value: dlvalue,
-								data_param: dlparameter,
-								onclick: `dataLayer.push({'${dlparameter}':'${dlvalue}'})`
-							}
+					dlvalue: dlvalue
+				} );
+				this.props.onChange( applyFormat( 
+					this.props.value, 
+					{
+						type: 'mtm/link',
+						attributes: {
+							url: url,
+							title: title,
+							id: id,
+							class: classname,
+							target: 'none' == target ? '' : target,
+							data_value: dlvalue,
+							data_param: dlparameter,
+							onclick: `dataLayer.push({'${dlparameter}':'${dlvalue}'})`
 						}
-					) ) 
-				);
+					}
+				) );
 			} 
 		}
 		onRemove = () => {
