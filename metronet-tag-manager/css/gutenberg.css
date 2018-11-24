@@ -1,0 +1,8 @@
+.mtm-datalayer-input {
+  padding: 20px; }
+  .mtm-datalayer-input h2 {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px; }
+  .mtm-datalayer-input input[type=text] {
+    width: 100%; }
