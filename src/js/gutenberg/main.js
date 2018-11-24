@@ -1,4 +1,4 @@
-const { PanelBody, PanelRow, TextControl, Popover, Button, CheckBoxControl, withSpokenMessages } = wp.components;
+const { PanelBody, PanelRow, TextControl, Popover, Button, CheckboxControl, withSpokenMessages } = wp.components;
 const { __, _x } = wp.i18n;
 const {registerFormatType, getActiveFormat, applyFormat, toggleFormat, removeFormat } = window.wp.richText;
 const { Fragment, Component } = wp.element;
@@ -19,6 +19,7 @@ registerFormatType( 'mtm/link', {
 		title: 'title',
 		id: 'id',
 		class: 'class',
+		target: 'target'
 
 	},
 	className: 'mtm-dl-link',
@@ -31,6 +32,7 @@ registerFormatType( 'mtm/link', {
 				title: '',
 				id: '',
 				classname: '',
+				target: '',
 			};
 		}
 		onClick = () => {
@@ -109,6 +111,7 @@ registerFormatType( 'mtm/link', {
 						title: this.state.title,
 						id: this.state.id,
 						class: this.state.classname,
+						target: 'none' == this.state.target ? '' : this.state.target,
 					}
 				}
 			) ); 
@@ -127,6 +130,21 @@ registerFormatType( 'mtm/link', {
 				}
 			);
 		}
+		onTargetChange = ( checked ) => {
+			if( checked ) {
+				this.setState(
+					{
+						target: '_blank'
+					}
+				);
+			} else {
+				this.setState(
+					{
+						target: 'none'
+					}
+				);
+			}
+		}
 		onEdit = () => {
 			let format = getActiveFormat(this.props.value, 'mtm/link');
 			if ( undefined !== format ) {
@@ -135,6 +153,7 @@ registerFormatType( 'mtm/link', {
 					title: (format.attributes.title != this.state.title && '' == this.state.title) ? format.attributes.title : this.state.title,
 					classname: (format.attributes.class != this.state.classname && '' == this.state.classname ) ? format.attributes.class : this.state.classname,
 					id: (format.attributes.id != this.state.id && '' == this.state.id ) ? format.attributes.id : this.state.id,
+					target: (format.attributes.target != this.state.target && '' == this.state.target ) ? format.attributes.target : this.state.target,
 				};
 			} 
 			this.props.onChange( applyFormat( 
@@ -146,6 +165,7 @@ registerFormatType( 'mtm/link', {
 						title: this.state.title,
 						id: this.state.id,
 						class: this.state.classname,
+						target: 'none' == this.state.target ? '' : this.state.target,
 					}
 				}
 			) ); 
@@ -171,16 +191,19 @@ registerFormatType( 'mtm/link', {
 			let title = '';
 			let classname = '';
 			let id = '';
+			let target = '';
 			if( undefined !== format && this.props.isActive ) {
 				url = (format.attributes.url != this.state.url && '' == this.state.url) ? format.attributes.url : this.state.url;
 				title = (format.attributes.title != this.state.title && '' == this.state.title) ? format.attributes.title : this.state.title;
 				classname = (format.attributes.class != this.state.classname && '' == this.state.classname ) ? format.attributes.class : this.state.classname;
 				id = (format.attributes.id != this.state.id && '' == this.state.id ) ? format.attributes.id : this.state.id;
+				target = (format.attributes.target != this.state.target && '' == this.state.target ) ? format.attributes.target : this.state.target;
 			} else {
 				url = this.state.url;
 				title = this.state.title;
 				id = this.state.id;
 				classname = this.state.classname;
+				target = this.state.target;
 			}
 			return (
 				<Fragment>
@@ -222,6 +245,11 @@ registerFormatType( 'mtm/link', {
 										label={__('Enter Class Name', 'metronet-tag-manager')}
 										value={classname} 
 										onChange={ (text) => this.onClassChange(text) }
+									/>
+									<CheckboxControl
+										label={__('Open in new window', 'metronet-tag-manager')}
+										checked={target == '_blank' ? true : false}
+										onChange={(checked) => this.onTargetChange(checked) }
 									/>
 									{!isActive &&
 									<Fragment>
