@@ -4,7 +4,7 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: https://wordpress.org/plugins/metronet-profile-picture/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
-Version: 1.3.0
+Version: 1.5.0
 Requires at least: 4.2
 Author URI: https://mediaron.com
 Text Domain: metronet-tag-manager
@@ -12,6 +12,7 @@ Domain Path: /languages
 Contributors: ronalfy,pereirinha
 Credits: Ronald Huereca, Marco Pereirinha
 */ 
+define('METRONET_TAG_MANAGER_VERISON', '1.5.0');
 class Metronet_Tag_Manager {
 	private static $instance = null;
 	private $admin_options = array();
@@ -27,6 +28,8 @@ class Metronet_Tag_Manager {
 	private function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 		$this->admin_options = $this->get_admin_options();
+		include_once Metronet_Tag_Manager::get_plugin_dir('/gutenberg/class-gutenberg.php');
+		new Metronet_Tag_Manager_Gutenberg();
 	
 	} //end construct
 	
@@ -163,6 +166,45 @@ class Metronet_Tag_Manager {
 		}
 		return $multisite_network;
 	} //end is_multisite
+	
+	/**
+     * Return the absolute path to an asset.
+     *
+     * Return the absolute path to an asset based on a relative argument.
+     *
+     * @param string $path Relative path to the asset.
+     *
+     * @since  5.0.0
+     * @access static
+     *
+     * @return string Absolute path to the relative asset.
+     */
+    public static function get_plugin_dir($path = '')
+    {
+        $dir = rtrim(plugin_dir_path(__FILE__), '/');
+        if (!empty($path) && is_string($path))
+            $dir .= '/' . ltrim($path, '/');
+        return $dir;
+    }
+
+    /**
+     * Return the web path to an asset.
+     *
+     * Return the web path to an asset based on a relative argument.
+     *
+     * @since 2.0.0
+     * @access static
+     *
+     * @param string $path Relative path to the asset.
+     * @return string Web path to the relative asset.
+     */
+    public static function get_plugin_url($path = '')
+    {
+        $dir = rtrim(plugin_dir_url(__FILE__), '/');
+        if (!empty($path) && is_string($path))
+            $dir .= '/' . ltrim($path, '/');
+        return $dir;
+	}
 	
 	/**
 	* init()
