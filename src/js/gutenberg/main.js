@@ -19,8 +19,10 @@ registerFormatType( 'mtm/link', {
 		title: 'title',
 		id: 'id',
 		class: 'class',
-		target: 'target'
-
+		target: 'target',
+		onclick: 'onclick',
+		data_param: 'data-param',
+		data_value: 'data-value'
 	},
 	className: 'mtm-dl-link',
 	edit: withSpokenMessages( class MTMDLEdit extends Component {
@@ -33,6 +35,8 @@ registerFormatType( 'mtm/link', {
 				id: '',
 				classname: '',
 				target: '',
+				dlparameter: '',
+				dlvalue: '',
 			};
 		}
 		onClick = () => {
@@ -55,6 +59,8 @@ registerFormatType( 'mtm/link', {
 			let title = '';
 			let id = '';
 			let classname = '';
+			let dlparameter = '';
+			let dlvalue = '';
 			if ( this.state.modal == false || this.props.isActive ) {
 				let format = getActiveFormat(this.props.value, 'mtm/link');
 				if ( undefined != format ) {
@@ -62,6 +68,8 @@ registerFormatType( 'mtm/link', {
 					title = format.attributes.title;
 					id = format.attributes.id;
 					classname = format.attributes.class;
+					dlparameter = format.attributes.data_param;
+					dlvalue = format.attributes.data_value;
 				}
 				this.setState(
 					{
@@ -69,7 +77,9 @@ registerFormatType( 'mtm/link', {
 						url: url,
 						title: title,
 						id: id,
-						classname: classname
+						classname: classname,
+						dlparameter: dlparameter,
+						dlvalue: dlvalue
 					}
 				);
 			} else {
@@ -80,6 +90,8 @@ registerFormatType( 'mtm/link', {
 						title: title,
 						id: id,
 						classname: classname,
+						dlparameter: dlparameter,
+						dlvalue: dlvalue,
 					}
 				);
 			}
@@ -112,6 +124,8 @@ registerFormatType( 'mtm/link', {
 						id: this.state.id,
 						class: this.state.classname,
 						target: 'none' == this.state.target ? '' : this.state.target,
+						data_param: this.state.dlparameter,
+						data_value: this.state.dlvalue
 					}
 				}
 			) ); 
@@ -145,6 +159,20 @@ registerFormatType( 'mtm/link', {
 				);
 			}
 		}
+		onDLParameterChange = ( text ) => {
+			this.setState(
+				{
+					dlparameter: text
+				}
+			);
+		}
+		onDLValueChange = ( text ) => {
+			this.setState( 
+				{
+					dlvalue: text
+				}
+			)
+		}
 		onEdit = () => {
 			let format = getActiveFormat(this.props.value, 'mtm/link');
 			if ( undefined !== format ) {
@@ -154,6 +182,8 @@ registerFormatType( 'mtm/link', {
 					classname: (format.attributes.class != this.state.classname && '' == this.state.classname ) ? format.attributes.class : this.state.classname,
 					id: (format.attributes.id != this.state.id && '' == this.state.id ) ? format.attributes.id : this.state.id,
 					target: (format.attributes.target != this.state.target && '' == this.state.target ) ? format.attributes.target : this.state.target,
+					dlparameter: (format.attributes.data_param != this.state.dlparameter && '' == this.state.dlparameter ) ? format.attributes.data_param : this.state.dlparameter,
+					dlvalue: (format.attributes.data_value != this.state.dlvalue && '' == this.state.dlvalue ) ? format.attributes.data_value : this.state.dlvalue,
 				};
 			} 
 			this.props.onChange( applyFormat( 
@@ -166,6 +196,8 @@ registerFormatType( 'mtm/link', {
 						id: this.state.id,
 						class: this.state.classname,
 						target: 'none' == this.state.target ? '' : this.state.target,
+						data_value: this.state.dlvalue,
+						data_param: this.state.dlparameter,
 					}
 				}
 			) ); 
@@ -192,18 +224,24 @@ registerFormatType( 'mtm/link', {
 			let classname = '';
 			let id = '';
 			let target = '';
+			let dlvalue = '';
+			let dlparameter = '';
 			if( undefined !== format && this.props.isActive ) {
 				url = (format.attributes.url != this.state.url && '' == this.state.url) ? format.attributes.url : this.state.url;
 				title = (format.attributes.title != this.state.title && '' == this.state.title) ? format.attributes.title : this.state.title;
 				classname = (format.attributes.class != this.state.classname && '' == this.state.classname ) ? format.attributes.class : this.state.classname;
 				id = (format.attributes.id != this.state.id && '' == this.state.id ) ? format.attributes.id : this.state.id;
 				target = (format.attributes.target != this.state.target && '' == this.state.target ) ? format.attributes.target : this.state.target;
+				dlvalue = (format.attributes.data_value != this.state.dlvalue && '' == this.state.dlvalue ) ? format.attributes.data_value : this.state.dlvalue;
+				dlparameter = (format.attributes.data_param != this.state.dlparameter && '' == this.state.dlparameter ) ? format.attributes.data_param : this.state.dlparameter;
 			} else {
 				url = this.state.url;
 				title = this.state.title;
 				id = this.state.id;
 				classname = this.state.classname;
 				target = this.state.target;
+				dlvalue = this.state.dlvalue;
+				dlparameter = this.state.dlparameter;
 			}
 			return (
 				<Fragment>
@@ -250,6 +288,16 @@ registerFormatType( 'mtm/link', {
 										label={__('Open in new window', 'metronet-tag-manager')}
 										checked={target == '_blank' ? true : false}
 										onChange={(checked) => this.onTargetChange(checked) }
+									/>
+									<TextControl
+										label={__('Datalayer Parameter', 'metronet-tag-manager')}
+										value={dlparameter} 
+										onChange={ (text) => this.onDLParameterChange(text) }
+									/>
+									<TextControl
+										label={__('Datalayer Value', 'metronet-tag-manager')}
+										value={dlvalue} 
+										onChange={ (text) => this.onDLValueChange(text) }
 									/>
 									{!isActive &&
 									<Fragment>
