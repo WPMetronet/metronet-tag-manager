@@ -17,12 +17,56 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/js/gutenberg/main.js:15
+#: src/js/gutenberg/main.js:15, src/js/gutenberg/main.js:260, src/js/gutenberg/main.js:267
 msgid "Datalayer Link"
 msgstr ""
 
-#: src/js/gutenberg/main.js:24
-msgid "Datalayer"
+#: src/js/gutenberg/main.js:275
+msgid "Datalayer Variables"
+msgstr ""
+
+#: src/js/gutenberg/main.js:277
+msgid "Enter Title"
+msgstr ""
+
+#: src/js/gutenberg/main.js:282
+msgid "Enter URL"
+msgstr ""
+
+#: src/js/gutenberg/main.js:287
+msgid "Enter ID"
+msgstr ""
+
+#: src/js/gutenberg/main.js:292
+msgid "Enter Class Name"
+msgstr ""
+
+#: src/js/gutenberg/main.js:297
+msgid "Open in new window"
+msgstr ""
+
+#: src/js/gutenberg/main.js:302
+msgid "Datalayer Parameter"
+msgstr ""
+
+#: src/js/gutenberg/main.js:307
+msgid "Datalayer Value"
+msgstr ""
+
+#: src/js/gutenberg/main.js:314, src/tinyMCE/addparams.php:83
+msgid "Cancel"
+msgstr ""
+
+#: src/js/gutenberg/main.js:317, src/tinyMCE/addparams.php:82
+msgid "Save"
+msgstr ""
+
+#: src/js/gutenberg/main.js:324
+msgid "Remove"
+msgstr ""
+
+#: src/js/gutenberg/main.js:327
+msgid "Edit"
 msgstr ""
 
 #: src/metronet-tag-manager.php:53, src/metronet-tag-manager.php:60
@@ -151,12 +195,4 @@ msgstr ""
 
 #: src/tinyMCE/addparams.php:79
 msgid "Add"
-msgstr ""
-
-#: src/tinyMCE/addparams.php:82
-msgid "Save"
-msgstr ""
-
-#: src/tinyMCE/addparams.php:83
-msgid "Cancel"
 msgstr ""
