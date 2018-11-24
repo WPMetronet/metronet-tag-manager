@@ -2,8 +2,8 @@
 Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
-Tested up to: 4.9
-Stable tag: 1.3.0
+Tested up to: 5.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -78,6 +78,10 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 == Changelog ==
 
+= 1.5.0 =
+* Released 2018-11-24
+* Added Gutenberg inline option for setting a dataLayer variable
+
 = 1.3.0 =
 * Released 2018-07-25
 * Fixed a bug when saving and outputting Google Tag Manager snippets where an ampersand HTML entity was added to the output.
@@ -144,6 +148,9 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+Added Gutenberg inline option for setting a dataLayer variable
 
 = 1.3.0 =
 Fixed a bug when saving and outputting Google Tag Manager snippets where an ampersand HTML entity was added to the output.
