@@ -177,32 +177,41 @@ registerFormatType( 'mtm/link', {
 		onEdit = () => {
 			let format = getActiveFormat(this.props.value, 'mtm/link');
 			if ( undefined !== format ) {
-				this.state = {
-					url: (format.attributes.url != this.state.url && '' == this.state.url) ? format.attributes.url : this.state.url,
-					title: (format.attributes.title != this.state.title && '' == this.state.title) ? format.attributes.title : this.state.title,
-					classname: (format.attributes.class != this.state.classname && '' == this.state.classname ) ? format.attributes.class : this.state.classname,
-					id: (format.attributes.id != this.state.id && '' == this.state.id ) ? format.attributes.id : this.state.id,
-					target: (format.attributes.target != this.state.target && '' == this.state.target ) ? format.attributes.target : this.state.target,
-					dlparameter: (format.attributes.data_param != this.state.dlparameter && '' == this.state.dlparameter ) ? format.attributes.data_param : this.state.dlparameter,
-					dlvalue: (format.attributes.data_value != this.state.dlvalue && '' == this.state.dlvalue ) ? format.attributes.data_value : this.state.dlvalue,
-				};
+				let url = (format.attributes.url != this.state.url && '' == this.state.url) ? format.attributes.url : this.state.url;
+				let title = (format.attributes.title != this.state.title && '' == this.state.title) ? format.attributes.title : this.state.title;
+				let classname =(format.attributes.class != this.state.classname && '' == this.state.classname ) ? format.attributes.class : this.state.classname;
+				let id = (format.attributes.id != this.state.id && '' == this.state.id ) ? format.attributes.id : this.state.id;
+				let target =  (format.attributes.target != this.state.target && '' == this.state.target ) ? format.attributes.target : this.state.target;
+				let dlparameter = (format.attributes.data_param != this.state.dlparameter && '' == this.state.dlparameter ) ? format.attributes.data_param : this.state.dlparameter;
+				let dlvalue = (format.attributes.data_value != this.state.dlvalue && '' == this.state.dlvalue ) ? format.attributes.data_value : this.state.dlvalue;
+				this.setState = ( 
+					{
+					url: url,
+					title: title,
+					classname: classname,
+					id: id,
+					target: target,
+					dlparameter: dlparameter,
+					dlvalue: dlvalue,
+					},
+					this.props.onChange( applyFormat( 
+						this.props.value, 
+						{
+							type: 'mtm/link',
+							attributes: {
+								url: url,
+								title: title,
+								id: id,
+								class: classname,
+								target: 'none' == target ? '' : target,
+								data_value: dlvalue,
+								data_param: dlparameter,
+								onclick: `dataLayer.push({'${dlparameter}':'${dlvalue}'})`
+							}
+						}
+					) ) 
+				);
 			} 
-			this.props.onChange( applyFormat( 
-				this.props.value, 
-				{
-					type: 'mtm/link',
-					attributes: {
-						url: this.state.url,
-						title: this.state.title,
-						id: this.state.id,
-						class: this.state.classname,
-						target: 'none' == this.state.target ? '' : this.state.target,
-						data_value: this.state.dlvalue,
-						data_param: this.state.dlparameter,
-						onclick: `dataLayer.push({'${this.state.dlparameter}':'${this.state.dlvalue}'})`
-					}
-				}
-			) ); 
 		}
 		onRemove = () => {
 			this.props.onChange( removeFormat( 
