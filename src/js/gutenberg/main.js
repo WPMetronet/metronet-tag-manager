@@ -125,7 +125,8 @@ registerFormatType( 'mtm/link', {
 						class: this.state.classname,
 						target: 'none' == this.state.target ? '' : this.state.target,
 						data_param: this.state.dlparameter,
-						data_value: this.state.dlvalue
+						data_value: this.state.dlvalue,
+						onclick: `dataLayer.push({'${this.state.dlparameter}':'${this.state.dlvalue}'})`
 					}
 				}
 			) ); 
@@ -198,6 +199,7 @@ registerFormatType( 'mtm/link', {
 						target: 'none' == this.state.target ? '' : this.state.target,
 						data_value: this.state.dlvalue,
 						data_param: this.state.dlparameter,
+						onclick: `dataLayer.push({'${this.state.dlparameter}':'${this.state.dlvalue}'})`
 					}
 				}
 			) ); 
