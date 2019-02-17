@@ -41,8 +41,8 @@ registerFormatType( 'mtm/link', {
 		}
 		onClick = () => {
 			if ( this.props.isActive ) {
-				this.props.onChange( removeFormat( 
-					this.props.value, 
+				this.props.onChange( removeFormat(
+					this.props.value,
 					'mtm/link'
 				) );
 				return;
@@ -114,8 +114,8 @@ registerFormatType( 'mtm/link', {
 			this.setState( { modal: false } );
 		}
 		onSave = () => {
-			this.props.onChange( applyFormat( 
-				this.props.value, 
+			this.props.onChange( applyFormat(
+				this.props.value,
 				{
 					type: 'mtm/link',
 					attributes: {
@@ -129,7 +129,7 @@ registerFormatType( 'mtm/link', {
 						onclick: `dataLayer.push({'${this.state.dlparameter}':'${this.state.dlvalue}'})`
 					}
 				}
-			) ); 
+			) );
 		}
 		onIDChange = ( text ) => {
 			this.setState(
@@ -168,7 +168,7 @@ registerFormatType( 'mtm/link', {
 			);
 		}
 		onDLValueChange = ( text ) => {
-			this.setState( 
+			this.setState(
 				{
 					dlvalue: text
 				}
@@ -193,8 +193,8 @@ registerFormatType( 'mtm/link', {
 					dlparameter: dlparameter,
 					dlvalue: dlvalue
 				} );
-				this.props.onChange( applyFormat( 
-					this.props.value, 
+				this.props.onChange( applyFormat(
+					this.props.value,
 					{
 						type: 'mtm/link',
 						attributes: {
@@ -209,11 +209,11 @@ registerFormatType( 'mtm/link', {
 						}
 					}
 				) );
-			} 
+			}
 		}
 		onRemove = () => {
-			this.props.onChange( removeFormat( 
-				this.props.value, 
+			this.props.onChange( removeFormat(
+				this.props.value,
 				'mtm/link'
 			) );
 			this.setState( { modal: false } );
@@ -270,27 +270,27 @@ registerFormatType( 'mtm/link', {
 					}
 					{renderModal &&
 						<Fragment>
-							<Popover position="bottom" noArrow>
+							<Popover position="top" noArrow>
 								<div className="mtm-datalayer-input">
 									<h2>{__('Datalayer Variables', 'metronet-tag-manager')}</h2>
 									<TextControl
 										label={__('Enter Title', 'metronet-tag-manager')}
-										value={title} 
+										value={title}
 										onChange={ (text) => this.onTitleChange(text) }
 									/>
 									<TextControl
 										label={__('Enter URL', 'metronet-tag-manager')}
-										value={url} 
+										value={url}
 										onChange={ (text) => this.onURLChange(text) }
 									/>
 									<TextControl
 										label={__('Enter ID', 'metronet-tag-manager')}
-										value={id} 
+										value={id}
 										onChange={ (text) => this.onIDChange(text) }
 									/>
 									<TextControl
 										label={__('Enter Class Name', 'metronet-tag-manager')}
-										value={classname} 
+										value={classname}
 										onChange={ (text) => this.onClassChange(text) }
 									/>
 									<CheckboxControl
@@ -300,12 +300,12 @@ registerFormatType( 'mtm/link', {
 									/>
 									<TextControl
 										label={__('Datalayer Parameter', 'metronet-tag-manager')}
-										value={dlparameter} 
+										value={dlparameter}
 										onChange={ (text) => this.onDLParameterChange(text) }
 									/>
 									<TextControl
 										label={__('Datalayer Value', 'metronet-tag-manager')}
-										value={dlvalue} 
+										value={dlvalue}
 										onChange={ (text) => this.onDLValueChange(text) }
 									/>
 									{!isActive &&

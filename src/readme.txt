@@ -2,7 +2,7 @@
 Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
-Tested up to: 5.0
+Tested up to: 5.1
 Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,7 +38,7 @@ https://developers.google.com/tag-manager/
 
 Tracking Google Analytics Events with Google Tag Manager
 http://moz.com/ugc/tracking-google-analytics-events-with-google-tag-manager
- 
+
 Make Analytics Better with Tag Management and a Data Layer
 http://cutroni.com/blog/2012/05/14/make-analytics-better-with-tag-management-and-a-data-layer/
 
@@ -92,7 +92,7 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 = 1.2.7 =
 * Released 2017-11-15
-* Fixing issues in the admin where HTML elements were escaped accidentally. 
+* Fixing issues in the admin where HTML elements were escaped accidentally.
 
 = 1.2.3 =
 * Updated 2017-08-10
@@ -122,7 +122,7 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 * Bug fix - Allow periods in datavariables to comply with GTM 2.0.
 
 = 1.0.5 =
-* Updated 2014-12-11 - Ensuring WordPress 4.1 compatibility 
+* Updated 2014-12-11 - Ensuring WordPress 4.1 compatibility
 * Released 2014-09-11
 * Fixed anonymous function crashing PHP < 5.3 users
 
