@@ -3,7 +3,7 @@ Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
 Tested up to: 5.2
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -78,6 +78,10 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 
 == Changelog ==
 
+= 1.5.1 =
+* Released 2019-05-21
+* Added support for WordPress 5.2's wp_body_open tag.
+
 = 1.5.0 =
 * Released 2018-11-24
 * Added Gutenberg inline option for setting a dataLayer variable
@@ -148,6 +152,9 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+Added support for WordPress 5.2's wp_body_open tag.
 
 = 1.5.0 =
 Added Gutenberg inline option for setting a dataLayer variable
