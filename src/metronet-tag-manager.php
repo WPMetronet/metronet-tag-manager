@@ -95,6 +95,9 @@ class Metronet_Tag_Manager {
 		$post_date = get_post_field( 'post_date', $post_id );
 		return $post_date;
 	} //end filter_post_date
+	public function filter_post_type( $total_match, $match, $post_id ) {
+		return get_post_type();
+	} //end filter_post_date
 
 	private function get_admin_options() {
 		if ( empty( $this->admin_options ) ) {
@@ -147,6 +150,10 @@ class Metronet_Tag_Manager {
 				5 => array(
 					'name'  => 'post_date',
 					'value' => '%post_date%',
+				),
+				6 => array(
+					'name'  => 'post_type',
+					'value' => '%post_type%',
 				)
 			),
 			'external_variables' => array(),
@@ -266,6 +273,7 @@ class Metronet_Tag_Manager {
 		add_filter( 'gtm_logged_in', array( $this, 'filter_logged_in' ), 9, 3 );
 		add_filter( 'gtm_page_id', array( $this, 'filter_page_id' ), 9, 3 );
 		add_filter( 'gtm_post_date', array( $this, 'filter_post_date' ), 9, 3 );
+		add_filter( 'gtm_post_type', array( $this, 'filter_post_type' ), 9, 3 );
 
 		//TinyMCE Addition
 		if ( ( current_user_can('edit_posts') || current_user_can('edit_pages') ) && get_user_option('rich_editing') ) {
@@ -362,6 +370,7 @@ class Metronet_Tag_Manager {
 				$data_layer_array[ $vars[ 'name' ] ] = esc_js( $vars[ 'value' ] );
 			}
 		} else {
+
 			//Output DataLayer variables only if on a single post or page
 			global $post;
 			$post_id = $post->ID;
@@ -371,12 +380,14 @@ class Metronet_Tag_Manager {
 			foreach( $gtm_vars as $index => $vars ) {
 				$data_layer_array[ $vars[ 'name' ] ] = esc_js( $vars[ 'value' ] );
 			}
+			if ( 'on' === $this->admin_options['is_post_enabled'] ) {
 
-			//Retrieve per-post options and store to same array, overwriting the global options
-			$post_gtm_vars = get_post_meta( $post_id, '_gtm_vars', true );
-			if ( is_array( $post_gtm_vars ) ) {
-				foreach( $post_gtm_vars as $index => $vars ) {
-					$data_layer_array[ $vars[ 'name' ] ] = esc_js( $vars[ 'value' ] );
+				//Retrieve per-post options and store to same array, overwriting the global options
+				$post_gtm_vars = get_post_meta( $post_id, '_gtm_vars', true );
+				if ( is_array( $post_gtm_vars ) ) {
+					foreach( $post_gtm_vars as $index => $vars ) {
+						$data_layer_array[ $vars[ 'name' ] ] = esc_js( $vars[ 'value' ] );
+					}
 				}
 			}
 		}
