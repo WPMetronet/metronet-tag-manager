@@ -218,6 +218,10 @@ class Metronet_Tag_Manager {
 	*
 	*/
 	public function init() {
+
+		// Get admin options
+		$this->admin_options = $this->get_admin_options();
+
 		//* Localization Code */
 		load_plugin_textdomain( 'metronet-tag-manager', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -239,13 +243,17 @@ class Metronet_Tag_Manager {
 		add_action( 'admin_print_scripts-post.php', array( $this, 'print_scripts_settings' ) );
 		add_action( 'admin_print_scripts-post-new.php', array( $this, 'print_scripts_settings' ) );
 
-		//Plugin meta box
-		add_action( 'add_meta_boxes', array( $this, 'meta_box_init' ), 10, 1 );
 
-		//Save post hook for the metabox variables
-		add_action( 'save_post', array( $this, 'meta_box_save' ), 10, 1 );
+		if ( 'on' === $this->admin_options['is_post_enabled'] ) {
+			//Plugin meta box
+			add_action( 'add_meta_boxes', array( $this, 'meta_box_init' ), 10, 1 );
 
-		//Load GTM in the Footer (or header if they have the do_action( 'body_open' ) functionality
+			//Save post hook for the metabox variables
+			add_action( 'save_post', array( $this, 'meta_box_save' ), 10, 1 );
+		}
+
+
+		//Load GTM in the Footer (or header if they have the do_action( 'body_open' ) or use `wp_body_open` if user is using 5.2 and up functionality
 		add_action( 'wp_head', array( $this, 'output_tag_manager_head' ), 1 );
 		add_action( 'wp_body_open', array( $this, 'output_tag_manager_body' ) );
 		add_action( 'body_open', array( $this, 'output_tag_manager_body' ) );
@@ -261,13 +269,15 @@ class Metronet_Tag_Manager {
 
 		//TinyMCE Addition
 		if ( ( current_user_can('edit_posts') || current_user_can('edit_pages') ) && get_user_option('rich_editing') ) {
-			// Register addicional attribue for A tag
-			add_filter('tiny_mce_before_init', array( $this, 'tinymce_options'  ) );
+			if ( 'on' === $this->admin_options['enable_tiny_mce'] ) {
+				// Register addicional attribue for A tag
+				add_filter('tiny_mce_before_init', array( $this, 'tinymce_options'  ) );
 
-			add_filter('mce_external_plugins', array( $this, 'tinymce_add_metro_gtm_tinymce_plugin' ) );
-			add_filter('mce_buttons', array( $this, 'tinymce_register_metro_gtm_button' ) );
+				add_filter('mce_external_plugins', array( $this, 'tinymce_add_metro_gtm_tinymce_plugin' ) );
+				add_filter('mce_buttons', array( $this, 'tinymce_register_metro_gtm_button' ) );
 
-			add_action( 'wp_ajax_mtm_addparams', array( $this, 'ajax_tinymce_popup' ) );
+				add_action( 'wp_ajax_mtm_addparams', array( $this, 'ajax_tinymce_popup' ) );
+			}
 		}
 	} //end init
 
