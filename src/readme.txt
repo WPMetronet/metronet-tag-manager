@@ -3,7 +3,7 @@ Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
 Tested up to: 5.2
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -29,6 +29,8 @@ This plugin lets you:
 
 Please note that for this plugin to work there is a slight customization that is needed. WordPress doesn’t let you load scripts straight after the opening <body> tag which is where the GTM script needs to be placed to work correctly. To fix this you need to add `<?php do_action( 'body_open' ); ?>` just after the `<body>` tag and that’s it.
 
+> Note, if you are using WordPress 5.2. and up, contact your theme developer and ask them to insert `<?php wp_body_open(); ?>` just after the opening body tag of their theme. Here is some code to <a href="https://gist.github.com/ronalfy/6b7f43e70e644320aba67d1876a0aeff">show the theme developer to make it compatible with Metronet Tag Manager</a>.
+
 Please let us know if you have any feature requests or if you have any issues with this plugin.
 
 Below are a couple of resources you might find valuable if you are new to Google Tag Manager
@@ -48,6 +50,8 @@ http://cutroni.com/blog/2012/05/14/make-analytics-better-with-tag-management-and
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Modify your theme's `header.php` to include `<?php do_action( 'body_open' ); ?>` right after the opening `<body>` tag.
 4. Go to the plugin's settings and input your Google Tag Manager data.
+
+> <strong>Note</strong>: if you are using WordPress 5.2. and up, contact your theme developer and ask them to insert `<?php wp_body_open(); ?>` just after the opening body tag of their theme. Here is some code to <a href="https://gist.github.com/ronalfy/6b7f43e70e644320aba67d1876a0aeff">show the theme developer to make it compatible with Metronet Tag Manager</a>.
 
 For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager#filtering-variables">please see the filters section on GitHub</a>.
 
@@ -77,6 +81,11 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 3. Google Tag Manager snippet inside the plugin
 
 == Changelog ==
+
+= 1.5.2 =
+* Released 2019-05-24
+* Updating documentation.
+* Adding option to hide GTM data layer settings on posts/pages.
 
 = 1.5.1 =
 * Released 2019-05-21
@@ -152,6 +161,9 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+Updating documentation. Adding option to hide GTM data layer settings on posts/pages.
 
 = 1.5.1 =
 Added support for WordPress 5.2's wp_body_open tag.
