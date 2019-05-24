@@ -28,8 +28,10 @@ class Metronet_Tag_Manager {
 	private function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 		$this->admin_options = $this->get_admin_options();
-		include_once Metronet_Tag_Manager::get_plugin_dir('/gutenberg/class-gutenberg.php');
-		new Metronet_Tag_Manager_Gutenberg();
+		if ( 'on' === $this->admin_options['enable_gutenberg'] ) {
+			include_once Metronet_Tag_Manager::get_plugin_dir('/gutenberg/class-gutenberg.php');
+			new Metronet_Tag_Manager_Gutenberg();
+		}
 
 	} //end construct
 
