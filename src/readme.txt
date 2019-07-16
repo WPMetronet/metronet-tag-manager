@@ -3,7 +3,7 @@ Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
 Tested up to: 5.2
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -81,6 +81,10 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 3. Google Tag Manager snippet inside the plugin
 
 == Changelog ==
+
+= 1.5.3 =
+* Released 2019-07-16
+* Added Beaver Builder compatibility.
 
 = 1.5.2 =
 * Released 2019-05-24
@@ -161,6 +165,9 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.3 =
+Added Beaver Builder compatibility.
 
 = 1.5.2 =
 Updating documentation. Adding option to hide GTM data layer settings on posts/pages.

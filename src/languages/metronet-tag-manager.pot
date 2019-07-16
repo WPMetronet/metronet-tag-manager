@@ -69,107 +69,107 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: src/metronet-tag-manager.php:55, src/metronet-tag-manager.php:62
+#: src/metronet-tag-manager.php:66, src/metronet-tag-manager.php:73
 msgid "Settings"
 msgstr ""
 
-#: src/metronet-tag-manager.php:487
+#: src/metronet-tag-manager.php:500
 msgid "Name: "
 msgstr ""
 
-#: src/metronet-tag-manager.php:488
+#: src/metronet-tag-manager.php:501
 msgid "Value: "
 msgstr ""
 
-#: src/metronet-tag-manager.php:488, src/metronet-tag-manager.php:488, src/metronet-tag-manager.php:488, src/metronet-tag-manager.php:507
+#: src/metronet-tag-manager.php:501, src/metronet-tag-manager.php:501, src/metronet-tag-manager.php:501, src/metronet-tag-manager.php:520
 msgid "Delete"
 msgstr ""
 
-#: src/metronet-tag-manager.php:505
+#: src/metronet-tag-manager.php:518
 msgid "Name"
 msgstr ""
 
-#: src/metronet-tag-manager.php:506, src/tinyMCE/addparams.php:70
+#: src/metronet-tag-manager.php:519, src/tinyMCE/addparams.php:70
 msgid "Value"
 msgstr ""
 
-#: src/metronet-tag-manager.php:624
+#: src/metronet-tag-manager.php:637
 msgid "This request cannot be verified"
 msgstr ""
 
-#: src/metronet-tag-manager.php:628
+#: src/metronet-tag-manager.php:641
 msgid "Settings saved"
 msgstr ""
 
-#: src/metronet-tag-manager.php:718
+#: src/metronet-tag-manager.php:731
 msgid "Google recommends that the Google Tag Manager script is loaded straight after the opening <body> tag. For this to work, you will need to add the following piece of code into your template file just after the <body> tag: <?php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at the bottom of your site and might not track the way you want it to. For WordPress 5.2 and up, it is recommended to use <?php wp_body_open(); ?> straight after the body tag."
 msgstr ""
 
-#: src/metronet-tag-manager.php:720
+#: src/metronet-tag-manager.php:733
 msgid "View the Quickstart Guide"
 msgstr ""
 
-#: src/metronet-tag-manager.php:726
+#: src/metronet-tag-manager.php:739
 msgid "Google Tag Manager Code"
 msgstr ""
 
-#: src/metronet-tag-manager.php:728
+#: src/metronet-tag-manager.php:741
 msgid "You can view your Container Snippet by logging into Google Tag Manager, clicking Workspace, and clicking on your GTM-XXXXX code."
 msgstr ""
 
-#: src/metronet-tag-manager.php:729
+#: src/metronet-tag-manager.php:742
 msgid "Paste your Google Tag Manager code here, which will appear in the <head> portion of your site:"
 msgstr ""
 
-#: src/metronet-tag-manager.php:731
+#: src/metronet-tag-manager.php:744
 msgid "Paste your Google Tag Manager code here, which will ideally appear after the opening <body> tag:"
 msgstr ""
 
-#: src/metronet-tag-manager.php:736
+#: src/metronet-tag-manager.php:749
 msgid "Post/Page Variables"
 msgstr ""
 
-#: src/metronet-tag-manager.php:738
+#: src/metronet-tag-manager.php:751
 msgid "Add global variables and set defaults to show on posts, pages, and custom post types.  You can configure or overwrite these on a per-post basis by viewing a post."
 msgstr ""
 
-#: src/metronet-tag-manager.php:739, src/metronet-tag-manager.php:747
+#: src/metronet-tag-manager.php:752, src/metronet-tag-manager.php:760
 msgid "To see some examples, please visit the"
 msgstr ""
 
-#: src/metronet-tag-manager.php:739, src/metronet-tag-manager.php:747
+#: src/metronet-tag-manager.php:752, src/metronet-tag-manager.php:760
 msgid "Google Tag Manager Reference"
 msgstr ""
 
-#: src/metronet-tag-manager.php:744
+#: src/metronet-tag-manager.php:757
 msgid "External Variables"
 msgstr ""
 
-#: src/metronet-tag-manager.php:746
+#: src/metronet-tag-manager.php:759
 msgid "Add global variables that will show on all pages except posts, pages, or custom post types."
 msgstr ""
 
-#: src/metronet-tag-manager.php:752
+#: src/metronet-tag-manager.php:765
 msgid "Other Options"
 msgstr ""
 
-#: src/metronet-tag-manager.php:754
+#: src/metronet-tag-manager.php:767
 msgid "Enable data layer variables on post types?"
 msgstr ""
 
-#: src/metronet-tag-manager.php:755
+#: src/metronet-tag-manager.php:768
 msgid "Enable TinyMCE buttons for inserting data layer variables?"
 msgstr ""
 
-#: src/metronet-tag-manager.php:756
+#: src/metronet-tag-manager.php:769
 msgid "Enable Gutenberg formatting option for inserting data layer variables?"
 msgstr ""
 
-#: src/metronet-tag-manager.php:760
+#: src/metronet-tag-manager.php:773
 msgid "Reset to Defaults"
 msgstr ""
 
-#: src/metronet-tag-manager.php:760
+#: src/metronet-tag-manager.php:773
 msgid "Save Changes"
 msgstr ""
 

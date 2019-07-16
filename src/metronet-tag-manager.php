@@ -456,7 +456,7 @@ class Metronet_Tag_Manager {
 	} //end output_tag_manager
 
 	public function output_tag_manager_body() {
-		if ( did_action( 'fl_body_open' ) === && did_action( 'wp_footer' === 1 ) ) return;
+		if ( did_action( 'fl_body_open' ) === && did_action( 'wp_footer' ) === 1 ) return;
 		if ( did_action( 'wp_body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
 		if ( did_action( 'body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
 
