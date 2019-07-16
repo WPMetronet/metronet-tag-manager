@@ -4,7 +4,7 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: https://wordpress.org/plugins/metronet-profile-picture/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
-Version: 1.5.3
+Version: 1.5.4
 Requires at least: 4.2
 Author URI: https://mediaron.com
 Text Domain: metronet-tag-manager
@@ -375,7 +375,7 @@ class Metronet_Tag_Manager {
 	public function output_tag_manager_head() {
 		//Output DataLayer Variables
 		$data_layer_array = array();
-		if ( !is_single() && !is_page() ) {
+		if ( !is_single() && !is_page() && ! is_search() ) {
 			//Output datalayer variables if not on a single or post page
 			$gtm_vars = $this->admin_options[ 'external_variables' ];
 			foreach( $gtm_vars as $index => $vars ) {
