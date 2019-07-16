@@ -4,7 +4,7 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: https://wordpress.org/plugins/metronet-profile-picture/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
-Version: 1.5.2
+Version: 1.5.3
 Requires at least: 4.2
 Author URI: https://mediaron.com
 Text Domain: metronet-tag-manager
@@ -12,7 +12,7 @@ Domain Path: /languages
 Contributors: ronalfy,pereirinha
 Credits: Ronald Huereca, Marco Pereirinha
 */
-define('METRONET_TAG_MANAGER_VERISON', '1.5.1');
+define('METRONET_TAG_MANAGER_VERISON', '1.5.3');
 class Metronet_Tag_Manager {
 	private static $instance = null;
 	private $admin_options = array();
@@ -25,6 +25,11 @@ class Metronet_Tag_Manager {
 		return self::$instance;
 	} //end get_instance
 
+	/**
+	 * __construct
+	 *
+	 * @return void
+	 */
 	private function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
 		$this->admin_options = $this->get_admin_options();
@@ -49,7 +54,13 @@ class Metronet_Tag_Manager {
 		add_action( 'admin_print_scripts-' . $page_hook, array( $this, 'print_scripts_settings' ) );
 	} //end admin_menu_init
 
-	//Add a settings link for single site
+
+	/**
+	 * add_settings_link
+	 *
+	 * @param mixed $links
+	 * @return void
+	 */
 	public function add_settings_link( $links ) {
 		$admin_uri = add_query_arg( array( 'page' => 'metronet-tag-manager' ), admin_url( 'options-general.php' ) );
 		array_push($links, sprintf( '<a href="%s">%s</a>', esc_url( $admin_uri ), esc_html__( 'Settings', 'metronet-tag-manager' ) ) );
@@ -262,6 +273,7 @@ class Metronet_Tag_Manager {
 
 		//Load GTM in the Footer (or header if they have the do_action( 'body_open' ) or use `wp_body_open` if user is using 5.2 and up functionality
 		add_action( 'wp_head', array( $this, 'output_tag_manager_head' ), 1 );
+		add_action( 'fl_body_open', array( $this, 'output_tag_manager_body' ) ); // Beaver Builder compatibility
 		add_action( 'wp_body_open', array( $this, 'output_tag_manager_body' ) );
 		add_action( 'body_open', array( $this, 'output_tag_manager_body' ) );
 		add_action( 'wp_footer', array( $this, 'output_tag_manager_body' ) );
@@ -444,6 +456,7 @@ class Metronet_Tag_Manager {
 	} //end output_tag_manager
 
 	public function output_tag_manager_body() {
+		if ( did_action( 'fl_body_open' ) === && did_action( 'wp_footer' === 1 ) ) return;
 		if ( did_action( 'wp_body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
 		if ( did_action( 'body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
 
