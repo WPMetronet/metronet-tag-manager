@@ -2,7 +2,7 @@
 Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
-Tested up to: 5.3
+Tested up to: 6.1.1
 Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -169,6 +169,9 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.5 =
+Compatible with Wordpress 6.1.1
 
 = 1.5.4 =
 Adding GTM dataLayer on search pages.
