@@ -197,6 +197,9 @@ Fixing settings screen where documentation wasn't showing correctly.
 = 1.2.3 =
 Style attribute addition.
 
+= 1.2.4 =
+Compatible with Wordpress 6.1.1
+
 == Filtering Variables ==
 
 If you choose to place variable values inside percentage signs (e.g., %replace_test%), you can filter these as necessary.
