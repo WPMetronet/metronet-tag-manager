@@ -4,7 +4,7 @@ Plugin Name: Metronet Tag Manager
 Plugin URI: https://wordpress.org/plugins/metronet-profile-picture/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
-Version: 1.5.4
+Version: 1.5.5
 Requires at least: 4.2
 Author URI: https://mediaron.com
 Text Domain: metronet-tag-manager
@@ -12,7 +12,9 @@ Domain Path: /languages
 Contributors: ronalfy,pereirinha
 Credits: Ronald Huereca, Marco Pereirinha
 */
-define('METRONET_TAG_MANAGER_VERISON', '1.5.3');
+
+define('METRONET_TAG_MANAGER_VERISON', '1.5.5');
+
 class Metronet_Tag_Manager {
 	private static $instance = null;
 	private $admin_options = array();
@@ -727,11 +729,15 @@ class Metronet_Tag_Manager {
 		global $current_user;
 		$user_id = $current_user->ID;
 		if ( !get_user_meta( $user_id, 'gtm_body_notice', true ) ) {
-			echo '<div class="updated"><p>';
-			esc_html_e( "Google recommends that the Google Tag Manager script is loaded straight after the opening <body> tag. For this to work, you will need to add the following piece of code into your template file just after the <body> tag: <?php do_action( 'body_open' ); ?> . Otherwise the GMT script will be added at the bottom of your site and might not track the way you want it to. For WordPress 5.2 and up, it is recommended to use <?php wp_body_open(); ?> straight after the body tag.", 'metronet-tag-manager' );
-			echo '&nbsp;';
-			printf( '<a href="%s">%s</a>', esc_url( 'https://developers.google.com/tag-manager/quickstart' ), esc_html__( 'View the Quickstart Guide', 'metronet-tag-manager' ) );
-			echo '</p></div>';
+
+			$response = $this->getMessage();
+			$response = json_decode($response, true);
+
+			foreach($response['messages'] as $message) {
+				echo '<div class="updated"><p>';
+					echo $message;
+				echo '</p></div>';
+			}
 		}
 		?>
 		<table class="form-table">
@@ -776,6 +782,33 @@ class Metronet_Tag_Manager {
 
 
 	} //end settings_page
+
+	public function getMessage()
+	{
+	    $curl = curl_init();
+
+	    curl_setopt_array($curl, [
+	        CURLOPT_URL => "https://message.wpmetronet.com/data/pBk6gEfJop38QUCP.json",
+	        CURLOPT_RETURNTRANSFER => true,
+	        CURLOPT_ENCODING => "",
+	        CURLOPT_MAXREDIRS => 10,
+	        CURLOPT_TIMEOUT => 30,
+	        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	        CURLOPT_CUSTOMREQUEST => "GET",
+	        CURLOPT_POSTFIELDS => "",
+	    ]);
+
+	    $response = curl_exec($curl);
+	    $err = curl_error($curl);
+
+	    curl_close($curl);
+
+	    if (!$err) {
+	        return $response;
+	    }
+
+	    // return null;
+	}
 
 } //end class Metronet_Tag_Manager
 
