@@ -5,11 +5,11 @@
 	//Register Scripts
 	wp_register_script( 'tiny_mce_popup', includes_url( '/js/tinymce/tiny_mce_popup.js' ), array( 'jquery-ui-core', 'jquery-ui-dialog' ) );
 	wp_register_script( 'MTM_tiny_mce', plugins_url( 'addparams.js', __FILE__ ), array( 'tiny_mce_popup' ), 'v2' );
-	
+
 	//Register Styles
 	wp_register_style( 'jquery-ui', plugins_url( '/css/jquery-ui.css', __FILE__ ) );
 	wp_register_style( 'MTM_tiny_mce', plugins_url( '/css/style.css', __FILE__ ), array( 'jquery-ui' ) );
-	
+
 	wp_print_scripts( array( 'MTM_tiny_mce' ) );
 	wp_print_styles( array( 'MTM_tiny_mce' ) ); ?>
 </head>

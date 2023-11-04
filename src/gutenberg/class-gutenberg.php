@@ -1,7 +1,7 @@
 <?php
- // Prevent direct file access
- if (!defined('ABSPATH')) {
-    die('No direct access');
+// Prevent direct file access
+if ( ! defined('ABSPATH')) {
+	die('No direct access');
 }
 /**
  * Gutenberg class for Metronet Tag Manager
@@ -18,20 +18,20 @@
  */
 class Metronet_Tag_Manager_Gutenberg {
 	public function __construct() {
-		if (!function_exists( 'register_block_type')) {
+		if ( ! function_exists( 'register_block_type')) {
 			return;
 		}
 
 		add_action('init', array($this, 'register_block'));
 		add_action('enqueue_block_assets', array($this, 'add_gutenberg_styles'));
-		add_action('enqueue_block_editor_assets', array($this,'add_gutenberg_scripts'));
-		add_action('rest_api_init', array($this,'register_routes'));
+		add_action('enqueue_block_editor_assets', array($this, 'add_gutenberg_scripts'));
+		add_action('rest_api_init', array($this, 'register_routes'));
 	}
 
 	public function register_routes() {
 	}
 
-	function rest_check_permissions() {
+	public function rest_check_permissions() {
 		if (current_user_can('edit_posts')) {
 			return true;
 		}
@@ -40,7 +40,7 @@ class Metronet_Tag_Manager_Gutenberg {
 
 	public function register_block() {
 		register_block_type( 'metronettagmanager/anchor', array(
-			'attributes' => array()
+			'attributes' => array(),
 		) );
 	}
 

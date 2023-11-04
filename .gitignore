@@ -1,5 +1,6 @@
 dist
 node_modules
+yarn-error.log
 .DS_Store
-metronet-tag-manager\.zip
+metronet-tag-manager.zip
 metronet-tag-manager
