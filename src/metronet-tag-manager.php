@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Metronet Tag Manager
-Plugin URI: https://wordpress.org/plugins/metronet-profile-picture/
+Plugin URI: https://wordpress.org/plugins/metronet-tag-manager/
 Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
-Version: 1.5.5
+Version: 1.6.0
 Requires at least: 4.2
 Author URI: https://mediaron.com
 Text Domain: metronet-tag-manager
@@ -13,7 +13,7 @@ Contributors: ronalfy,pereirinha
 Credits: Ronald Huereca, Marco Pereirinha
 */
 
-define('METRONET_TAG_MANAGER_VERISON', '1.5.5');
+define('METRONET_TAG_MANAGER_VERISON', '1.6.0');
 
 class Metronet_Tag_Manager {
 	private static $instance = null;
@@ -110,7 +110,30 @@ class Metronet_Tag_Manager {
 	} //end filter_post_date
 	public function filter_post_type( $total_match, $match, $post_id ) {
 		return get_post_type();
-	} //end filter_post_date
+	} //end filter_post_type
+	public function filter_category( $total_match, $match, $post_id ) {
+		$categories = get_the_category( $post_id );
+		if ( ! empty( $categories ) ) {
+			return $categories[0]->slug;
+		}
+		return '';
+	} //end filter_category
+	public function filter_tags( $total_match, $match, $post_id ) {
+		$tags = get_the_tags( $post_id );
+		if ( ! empty( $tags ) && ! is_wp_error( $tags ) ) {
+			return implode( ',', wp_list_pluck( $tags, 'slug' ) );
+		}
+		return '';
+	} //end filter_tags
+	public function filter_post_id( $total_match, $match, $post_id ) {
+		return (int) $post_id;
+	} //end filter_post_id
+	public function filter_permalink( $total_match, $match, $post_id ) {
+		return get_permalink( $post_id );
+	} //end filter_permalink
+	public function filter_language( $total_match, $match, $post_id ) {
+		return get_locale();
+	} //end filter_language
 
 	private function get_admin_options() {
 		if ( empty( $this->admin_options ) ) {
@@ -172,7 +195,18 @@ class Metronet_Tag_Manager {
 			'external_variables' => array(),
 			'is_post_enabled'    => 'on',
 			'enable_tiny_mce'    => 'on',
-			'enable_gutenberg'   => 'on'
+			'enable_gutenberg'   => 'on',
+			'enable_login_page'  => 'off',
+			'exclude_logged_in'  => 'off',
+			'exclude_mobile'     => 'off',
+			'consent_mode'                    => 'off',
+			'consent_analytics_storage'       => 'denied',
+			'consent_ad_storage'              => 'denied',
+			'consent_ad_user_data'            => 'denied',
+			'consent_ad_personalization'      => 'denied',
+			'consent_functionality_storage'   => 'denied',
+			'consent_personalization_storage' => 'denied',
+			'consent_security_storage'        => 'granted',
 		);
 		return $defaults;
 	} //end get_default_options
@@ -280,6 +314,12 @@ class Metronet_Tag_Manager {
 		add_action( 'body_open', array( $this, 'output_tag_manager_body' ) );
 		add_action( 'wp_footer', array( $this, 'output_tag_manager_body' ) );
 
+		// Login page output hooks
+		if ( 'on' === $this->admin_options['enable_login_page'] ) {
+			add_action( 'login_head', array( $this, 'output_tag_manager_head' ) );
+			add_action( 'login_footer', array( $this, 'output_tag_manager_body' ) );
+		}
+
 		//Filters for the GTM variables
 		add_filter( 'gtm_post_title', array( $this, 'filter_post_title' ), 9, 3 );
 		add_filter( 'gtm_author_name', array( $this, 'filter_author_name' ), 9, 3 );
@@ -288,6 +328,15 @@ class Metronet_Tag_Manager {
 		add_filter( 'gtm_page_id', array( $this, 'filter_page_id' ), 9, 3 );
 		add_filter( 'gtm_post_date', array( $this, 'filter_post_date' ), 9, 3 );
 		add_filter( 'gtm_post_type', array( $this, 'filter_post_type' ), 9, 3 );
+		add_filter( 'gtm_category', array( $this, 'filter_category' ), 9, 3 );
+		add_filter( 'gtm_tags', array( $this, 'filter_tags' ), 9, 3 );
+		add_filter( 'gtm_post_id', array( $this, 'filter_post_id' ), 9, 3 );
+		add_filter( 'gtm_permalink', array( $this, 'filter_permalink' ), 9, 3 );
+		add_filter( 'gtm_language', array( $this, 'filter_language' ), 9, 3 );
+
+		// Settings import/export AJAX
+		add_action( 'wp_ajax_mtm_export_settings', array( $this, 'ajax_export_settings' ) );
+		add_action( 'wp_ajax_mtm_import_settings', array( $this, 'ajax_import_settings' ) );
 
 		//TinyMCE Addition
 		if ( ( current_user_can('edit_posts') || current_user_can('edit_pages') ) && get_user_option('rich_editing') ) {
@@ -375,6 +424,32 @@ class Metronet_Tag_Manager {
 	} //end meta_box_settings
 
 	public function output_tag_manager_head() {
+		// Conditional loading guards
+		if ( 'on' === $this->admin_options['exclude_logged_in'] && is_user_logged_in() ) {
+			return;
+		}
+		if ( 'on' === $this->admin_options['exclude_mobile'] && wp_is_mobile() ) {
+			return;
+		}
+
+		// Google Consent Mode v2 — output before GTM snippet
+		if ( 'on' === $this->admin_options['consent_mode'] ) {
+			$consent_keys = array(
+				'analytics_storage', 'ad_storage', 'ad_user_data', 'ad_personalization',
+				'functionality_storage', 'personalization_storage', 'security_storage',
+			);
+			$consent_states = array();
+			foreach ( $consent_keys as $key ) {
+				$opt_key = 'consent_' . $key;
+				$consent_states[ $key ] = isset( $this->admin_options[ $opt_key ] ) ? $this->admin_options[ $opt_key ] : 'denied';
+			}
+			echo "<script>\n";
+			echo "window.dataLayer = window.dataLayer || [];\n";
+			echo "function gtag(){dataLayer.push(arguments);}\n";
+			echo 'gtag(\'consent\', \'default\', ' . wp_json_encode( $consent_states ) . ");\n";
+			echo "</script>\n";
+		}
+
 		//Output DataLayer Variables
 		$data_layer_array = array();
 		if ( !is_single() && !is_page() && ! is_search() ) {
@@ -458,6 +533,14 @@ class Metronet_Tag_Manager {
 	} //end output_tag_manager
 
 	public function output_tag_manager_body() {
+		// Conditional loading guards
+		if ( 'on' === $this->admin_options['exclude_logged_in'] && is_user_logged_in() ) {
+			return;
+		}
+		if ( 'on' === $this->admin_options['exclude_mobile'] && wp_is_mobile() ) {
+			return;
+		}
+
 		if ( did_action( 'fl_body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
 		if ( did_action( 'wp_body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
 		if ( did_action( 'body_open' ) === 1 && did_action( 'wp_footer' ) === 1 ) return;
@@ -547,10 +630,23 @@ class Metronet_Tag_Manager {
 	* @returns string   $value   A formatted variable
 	**/
 	private function sanitize_value( $value ) {
-		if( preg_match( '/^%([-_A-Za-z0-9]*)%$/', $value ) ) {
-			return $value;
+		// Preserve any %placeholder% tokens before sanitizing
+		$placeholders = array();
+		$value = preg_replace_callback(
+			'/%([A-Za-z0-9_-]+)%/',
+			function( $m ) use ( &$placeholders ) {
+				$token = '{{MTM_PH_' . count( $placeholders ) . '}}';
+				$placeholders[ $token ] = $m[0];
+				return $token;
+			},
+			$value
+		);
+		$value = sanitize_text_field( $value );
+		// Restore preserved placeholders
+		if ( ! empty( $placeholders ) ) {
+			$value = str_replace( array_keys( $placeholders ), array_values( $placeholders ), $value );
 		}
-		return sanitize_text_field( $value );
+		return $value;
 	}
 
 	/**
@@ -705,9 +801,20 @@ class Metronet_Tag_Manager {
 				$this->admin_options[ 'external_variables' ] = $external_variable_array;
 
 				// Save the other options
-				$this->admin_options['is_post_enabled'] = sanitize_text_field( wp_unslash( $_POST['is_post_enabled'] ) );
-				$this->admin_options['enable_tiny_mce'] = sanitize_text_field( wp_unslash( $_POST['enable_tiny_mce'] ) );
+				$this->admin_options['is_post_enabled']  = sanitize_text_field( wp_unslash( $_POST['is_post_enabled'] ) );
+				$this->admin_options['enable_tiny_mce']  = sanitize_text_field( wp_unslash( $_POST['enable_tiny_mce'] ) );
 				$this->admin_options['enable_gutenberg'] = sanitize_text_field( wp_unslash( $_POST['enable_gutenberg'] ) );
+				$this->admin_options['enable_login_page'] = sanitize_text_field( wp_unslash( $_POST['enable_login_page'] ) );
+				$this->admin_options['exclude_logged_in'] = sanitize_text_field( wp_unslash( $_POST['exclude_logged_in'] ) );
+				$this->admin_options['exclude_mobile']    = sanitize_text_field( wp_unslash( $_POST['exclude_mobile'] ) );
+
+				// Consent Mode options
+				$this->admin_options['consent_mode'] = sanitize_text_field( wp_unslash( $_POST['consent_mode'] ) );
+				$consent_keys = array( 'analytics_storage', 'ad_storage', 'ad_user_data', 'ad_personalization', 'functionality_storage', 'personalization_storage', 'security_storage' );
+				foreach ( $consent_keys as $ck ) {
+					$allowed_val = isset( $_POST[ 'consent_' . $ck ] ) ? 'granted' : 'denied';
+					$this->admin_options[ 'consent_' . $ck ] = $allowed_val;
+				}
 
 				//Save the admin options
 				$this->save_admin_options();
@@ -730,7 +837,7 @@ class Metronet_Tag_Manager {
 		$user_id = $current_user->ID;
 		if ( !get_user_meta( $user_id, 'gtm_body_notice', true ) ) {
 
-			$response = $this->getMessage();
+			$response = $this->get_message();
 			$response = json_decode($response, true);
 
 			foreach($response['messages'] as $message) {
@@ -773,6 +880,56 @@ class Metronet_Tag_Manager {
 					<p><input type="hidden" value="off" name="is_post_enabled" /><label><input type="checkbox" name="is_post_enabled" value="on" <?php checked( $this->admin_options['is_post_enabled'], 'on' ); ?> /> <?php esc_html_e( 'Enable data layer variables on post types?', 'metronet-tag-manager' ); ?></label></p>
 					<p><input type="hidden" value="off" name="enable_tiny_mce" /><label><input type="checkbox" name="enable_tiny_mce" value="on" <?php checked( $this->admin_options['enable_tiny_mce'], 'on' ); ?> /> <?php esc_html_e( 'Enable TinyMCE buttons for inserting data layer variables?', 'metronet-tag-manager' ); ?></label></p>
 					<p><input type="hidden" value="off" name="enable_gutenberg" /><label><input type="checkbox" name="enable_gutenberg" value="on" <?php checked( $this->admin_options['enable_gutenberg'], 'on' ); ?> /> <?php esc_html_e( 'Enable Gutenberg formatting option for inserting data layer variables?', 'metronet-tag-manager' ); ?></label></p>
+					<p><input type="hidden" value="off" name="enable_login_page" /><label><input type="checkbox" name="enable_login_page" value="on" <?php checked( $this->admin_options['enable_login_page'], 'on' ); ?> /> <?php esc_html_e( 'Enable GTM output on the login page?', 'metronet-tag-manager' ); ?></label></p>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><?php esc_html_e( 'Conditional Tag Loading', 'metronet-tag-manager' ); ?></th>
+				<td>
+					<p><?php esc_html_e( 'Prevent the GTM snippet from loading for specific visitors.', 'metronet-tag-manager' ); ?></p>
+					<p><input type="hidden" value="off" name="exclude_logged_in" /><label><input type="checkbox" name="exclude_logged_in" value="on" <?php checked( $this->admin_options['exclude_logged_in'], 'on' ); ?> /> <?php esc_html_e( 'Exclude logged-in users from GTM tracking?', 'metronet-tag-manager' ); ?></label></p>
+					<p><input type="hidden" value="off" name="exclude_mobile" /><label><input type="checkbox" name="exclude_mobile" value="on" <?php checked( $this->admin_options['exclude_mobile'], 'on' ); ?> /> <?php esc_html_e( 'Exclude mobile devices from GTM tracking?', 'metronet-tag-manager' ); ?></label></p>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><?php esc_html_e( 'Google Consent Mode v2', 'metronet-tag-manager' ); ?></th>
+				<td>
+					<p><?php esc_html_e( 'Output gtag consent defaults before the GTM snippet (required for EU compliance). Checked = granted, unchecked = denied.', 'metronet-tag-manager' ); ?></p>
+					<p><input type="hidden" value="off" name="consent_mode" /><label><input type="checkbox" name="consent_mode" value="on" <?php checked( $this->admin_options['consent_mode'], 'on' ); ?> /> <?php esc_html_e( 'Enable Consent Mode v2', 'metronet-tag-manager' ); ?></label></p>
+					<?php
+					$consent_labels = array(
+						'analytics_storage'       => esc_html__( 'analytics_storage', 'metronet-tag-manager' ),
+						'ad_storage'              => esc_html__( 'ad_storage', 'metronet-tag-manager' ),
+						'ad_user_data'            => esc_html__( 'ad_user_data', 'metronet-tag-manager' ),
+						'ad_personalization'      => esc_html__( 'ad_personalization', 'metronet-tag-manager' ),
+						'functionality_storage'   => esc_html__( 'functionality_storage', 'metronet-tag-manager' ),
+						'personalization_storage' => esc_html__( 'personalization_storage', 'metronet-tag-manager' ),
+						'security_storage'        => esc_html__( 'security_storage', 'metronet-tag-manager' ),
+					);
+					foreach ( $consent_labels as $ck => $label ) :
+						$current = isset( $this->admin_options[ 'consent_' . $ck ] ) ? $this->admin_options[ 'consent_' . $ck ] : 'denied';
+						?>
+						<p><label><input type="checkbox" name="consent_<?php echo esc_attr( $ck ); ?>" value="granted" <?php checked( $current, 'granted' ); ?> /> <?php echo esc_html( $label ); ?></label></p>
+					<?php endforeach; ?>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><?php esc_html_e( 'Import / Export Settings', 'metronet-tag-manager' ); ?></th>
+				<td>
+					<p><?php esc_html_e( 'Export all plugin settings as a JSON file or import a previously exported file.', 'metronet-tag-manager' ); ?></p>
+					<p>
+						<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-ajax.php?action=mtm_export_settings' ), 'mtm_export_settings' ) ); ?>" class="button button-secondary">
+							<?php esc_html_e( 'Export Settings', 'metronet-tag-manager' ); ?>
+						</a>
+					</p>
+					<form method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" enctype="multipart/form-data">
+						<input type="hidden" name="action" value="mtm_import_settings" />
+						<?php wp_nonce_field( 'mtm_import_settings', 'mtm_import_nonce' ); ?>
+						<p>
+							<input type="file" name="mtm_import_file" accept=".json" />
+							<input type="submit" class="button button-secondary" value="<?php esc_attr_e( 'Import Settings', 'metronet-tag-manager' ); ?>" />
+						</p>
+					</form>
 				</td>
 			</tr>
 		</table>
@@ -783,31 +940,55 @@ class Metronet_Tag_Manager {
 
 	} //end settings_page
 
-	public function getMessage()
-	{
-	    $curl = curl_init();
+	public function get_message() {
+		$response = wp_remote_get( 'https://message.wpmetronet.com/data/pBk6gEfJop38QUCP.json', array( 'timeout' => 30 ) );
+		if ( is_wp_error( $response ) ) {
+			return '{"messages":[]}';
+		}
+		return wp_remote_retrieve_body( $response );
+	}
 
-	    curl_setopt_array($curl, [
-	        CURLOPT_URL => "https://message.wpmetronet.com/data/pBk6gEfJop38QUCP.json",
-	        CURLOPT_RETURNTRANSFER => true,
-	        CURLOPT_ENCODING => "",
-	        CURLOPT_MAXREDIRS => 10,
-	        CURLOPT_TIMEOUT => 30,
-	        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	        CURLOPT_CUSTOMREQUEST => "GET",
-	        CURLOPT_POSTFIELDS => "",
-	    ]);
+	public function ajax_export_settings() {
+		if ( ! current_user_can( 'manage_options' ) || ! check_ajax_referer( 'mtm_export_settings', false, false ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'metronet-tag-manager' ) );
+		}
+		$options = $this->get_admin_options();
+		$filename = 'metronet-tag-manager-settings-' . gmdate( 'Y-m-d' ) . '.json';
+		header( 'Content-Type: application/json; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+		header( 'Pragma: no-cache' );
+		echo wp_json_encode( $options, JSON_PRETTY_PRINT );
+		exit;
+	}
 
-	    $response = curl_exec($curl);
-	    $err = curl_error($curl);
+	public function ajax_import_settings() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'metronet-tag-manager' ) );
+		}
+		check_ajax_referer( 'mtm_import_settings', 'mtm_import_nonce' );
 
-	    curl_close($curl);
+		if ( empty( $_FILES['mtm_import_file']['tmp_name'] ) ) {
+			wp_safe_redirect( add_query_arg( array( 'page' => 'metronet-tag-manager', 'mtm_import' => 'error' ), admin_url( 'options-general.php' ) ) );
+			exit;
+		}
 
-	    if (!$err) {
-	        return $response;
-	    }
+		$file_content = file_get_contents( sanitize_text_field( $_FILES['mtm_import_file']['tmp_name'] ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+		$imported = json_decode( $file_content, true );
 
-	    // return null;
+		if ( ! is_array( $imported ) ) {
+			wp_safe_redirect( add_query_arg( array( 'page' => 'metronet-tag-manager', 'mtm_import' => 'invalid' ), admin_url( 'options-general.php' ) ) );
+			exit;
+		}
+
+		$defaults = $this->get_default_options();
+		$merged   = array();
+		foreach ( $defaults as $key => $default_val ) {
+			$merged[ $key ] = isset( $imported[ $key ] ) ? $imported[ $key ] : $default_val;
+		}
+		$this->save_admin_options( $merged );
+
+		wp_safe_redirect( add_query_arg( array( 'page' => 'metronet-tag-manager', 'mtm_import' => 'success' ), admin_url( 'options-general.php' ) ) );
+		exit;
 	}
 
 } //end class Metronet_Tag_Manager

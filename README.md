@@ -3,7 +3,7 @@ Contributors: leonhitchens, ruskinconsulting
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
 Tested up to: 6.9
-Stable tag: 1.5.5
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://wpmetronet.com/contribute/
@@ -21,10 +21,15 @@ This is where the Metronet Tag Manager plugin shines. It unlocks the power of th
 This plugin lets you:
 <ul>
 <li>Easily add as many dataLayer variables per-post and per-page basis as needed.</li>
-<li>The plugin already gives you six predefined dataLayer variables you can change/remove or test the system with. These will be loaded on all pages and posts.</li>
+<li>The plugin already gives you predefined dataLayer variables you can change/remove or test the system with. These will be loaded on all pages and posts. Built-in placeholders include: %post_title%, %author_name%, %wordcount%, %logged_in%, %page_id%, %post_date%, %post_type%, %category%, %tags%, %post_id%, %permalink%, and %language%.</li>
 <li>Set up separate dataLayer variables for pages that aren’t posts or pages (like archives, etc).</li>
 <li>Lets you easily add an HTML event handler to any content link with the GTM TinyMCE button in the WYSIWYG.</li>
 <li>Lets you add your unique ID or a class to each content link with the GTM TinyMCE button in the WYSIWYG.</li>
+<li>Google Consent Mode v2 support — output default consent states before the GTM snippet for EU compliance.</li>
+<li>Export and import all plugin settings as JSON for easy migration between sites.</li>
+<li>Conditionally exclude GTM from logged-in users or mobile devices.</li>
+<li>Enable GTM output on the WordPress login page.</li>
+<li>Gutenberg block <code>metronettagmanager/datalayer-push</code> for adding inline dataLayer push buttons in the block editor.</li>
 </ul>
 
 Please note that for this plugin to work, a slight customization is needed. WordPress doesn’t let you load scripts straight after the opening <body> tag, where the GTM script needs to be placed to work correctly. To fix this, you need to add `<?php do_action( 'body_open' ); ?>` just after the `<body>` tag, and that’s it.
@@ -81,6 +86,19 @@ Yes. For custom values, <a href="https://github.com/WPMetronet/metronet-tag-mana
 3. Google Tag Manager snippet inside the plugin
 
 == Changelog ==
+
+= 1.6.0 =
+* Released 2026-04-24
+* Fixed plugin URI pointing to wrong plugin slug (was metronet-profile-picture, now metronet-tag-manager), resolving false-positive security scanner alerts.
+* Added GTM tag output on the WordPress login page — new "Enable on login page" toggle in settings.
+* Fixed %category% and similar placeholders being incorrectly stripped during sanitization.
+* Wired up REST API route in Gutenberg class (previously empty register_routes() dead code).
+* WPCS 3.0 compliance: renamed getMessage() to get_message(), added $wpdb->prepare() in uninstall.php.
+* Added five new built-in dataLayer variable placeholders: %category% (primary category slug), %tags% (comma-separated tag slugs), %post_id% (numeric post ID), %permalink% (canonical URL), %language% (site locale).
+* Added Google Consent Mode v2 support: configurable default consent states (analytics_storage, ad_storage, ad_user_data, ad_personalization, functionality_storage, personalization_storage, security_storage) output before the GTM snippet.
+* Added Settings Import/Export: export all settings as a JSON file and import them on another site.
+* Added Conditional Tag Loading: options to exclude GTM from logged-in users and/or mobile devices.
+* Added standalone Gutenberg block metronettagmanager/datalayer-push that renders a frontend button triggering a configurable dataLayer.push() event.
 
 = 1.5.5 =
 * Released 2023-06-24
@@ -173,6 +191,9 @@ Yes. For custom values, <a href="https://github.com/WPMetronet/metronet-tag-mana
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+Major release: new placeholders, Google Consent Mode v2, settings import/export, conditional tag loading, login page support, and Gutenberg dataLayer push block. Recommended for all users.
 
 = 1.5.5 =
 Compatible with Wordpress 6.1.1
