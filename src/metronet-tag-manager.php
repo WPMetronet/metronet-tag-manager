@@ -6,6 +6,7 @@ Description: Add Google Tag Manager tracking and declare Data Layer variables
 Author: Ronald Huereca
 Version: 1.6.0
 Requires at least: 4.2
+Tested up to: 7.0
 Author URI: https://mediaron.com
 Text Domain: metronet-tag-manager
 Domain Path: /languages

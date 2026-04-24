@@ -2,8 +2,8 @@
 Contributors: ronalfy, pereirinha
 Tags: google, google tag manager, tag manager
 Requires at least: 3.9
-Tested up to: 6.1.1
-Stable tag: 1.5.5
+Tested up to: 7.0
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://mediaron.com/contribute/
@@ -81,6 +81,20 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 3. Google Tag Manager snippet inside the plugin
 
 == Changelog ==
+
+= 1.6.0 =
+* Released 2026-04-24
+* Tested up to WordPress 7.0.
+* Fixed plugin URI pointing to wrong plugin slug (was metronet-profile-picture, now metronet-tag-manager), resolving false-positive security scanner alerts.
+* Added GTM tag output on the WordPress login page — new "Enable on login page" toggle in settings.
+* Fixed %category% and similar placeholders being incorrectly stripped during sanitization; reworked sanitize_value() to preserve any %placeholder% token regardless of surrounding text.
+* Wired up Gutenberg REST API route for reading and saving per-post dataLayer variables (previously register_routes() was empty dead code).
+* WPCS 3.0 compliance: renamed getMessage() to get_message(), replaced curl with wp_remote_get(), added $wpdb->prepare() in uninstall.php.
+* Added five new built-in dataLayer variable placeholders: %category% (primary category slug), %tags% (comma-separated tag slugs), %post_id% (numeric post ID), %permalink% (canonical URL), %language% (site locale via get_locale()).
+* Added Google Consent Mode v2 support: configurable default consent states (analytics_storage, ad_storage, ad_user_data, ad_personalization, functionality_storage, personalization_storage, security_storage) output as a gtag() call before the GTM snippet.
+* Added Settings Import/Export: export all plugin settings as a JSON file and re-import them on another site via the admin UI.
+* Added Conditional Tag Loading: new checkboxes to exclude GTM from logged-in users and/or mobile devices (uses wp_is_mobile()).
+* Added standalone Gutenberg block metronettagmanager/datalayer-push — insert a button anywhere in the block editor; configure the event name, key, and value in the block inspector; renders a frontend button that fires dataLayer.push() on click.
 
 = 1.5.5 =
 * Released 2023-06-24
@@ -173,6 +187,9 @@ Yes. For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+Major release tested up to WordPress 7.0. New built-in placeholders, Google Consent Mode v2, settings import/export, conditional tag loading, login page support, and a standalone Gutenberg dataLayer push block. Recommended for all users.
 
 = 1.5.5 =
 Compatible with Wordpress 6.1.1
