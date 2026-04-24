@@ -1,0 +1,47 @@
+body {
+	font-size: .75em;
+}
+
+#data{
+	padding: 15px 5px;
+}
+
+p, input[type="text"]{
+	width: 45%;
+	display: inline-block;
+}
+
+input[type="text"].fullwidth {
+	width: 92%;
+}
+
+p {
+	margin: 5px 0 2px;
+}
+
+input {
+	margin: 2px 0;
+	padding: .5em;
+	font-size: 1em;
+}
+
+strong {
+	margin: 20px 0 0;
+	display: block;
+}
+
+#apply {
+	width: 50px;
+	margin: 5px 0 20px;
+}
+
+
+.remParam {
+	margin: 0 5px;
+	font-weight: bolder;
+}
+
+.remParam:hover{
+	cursor: pointer;
+	color: #f00;
+}
