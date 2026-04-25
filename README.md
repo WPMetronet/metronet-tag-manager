@@ -14,39 +14,55 @@ Integrate Google Tag Manager into your website.
 
 Integrate Google Tag Manager into your website.
 
-The great thing about Google Tag Manager (GTM) is that you are able to gather most of your tracking scripts in one place. You can then fire these scripts whenever you want, specified by the rules you set up. This sounds great, right? Well, it is.  The only problem is that sometimes it takes some time to set these rules up. This implementation can either set a dataLayer variable in the dataLayer before the tag manager script is loaded or push an HTML event handler with the variable "event" to the dataLayer when a button is clicked. The problem is that this isn’t always that easy to do when you don’t have the ability/access to add the code to your site.
+The great thing about Google Tag Manager (GTM) is that you are able to gather most of your tracking scripts in one place. You can then fire these scripts whenever you want, specified by the rules you set up. This sounds great, right? Well it is. The only problem is that sometimes it takes a bit of implementing to set these rules up. This implementation can either be setting a dataLayer variable in the dataLayer before the tag manager script is loaded, or pushing a HTML event handler with the variable "event" to the dataLayer when a button is clicked. The problem is that this isn't always that easy to do when you don't have the ability/access to add the code to your site.
 
-This is where the Metronet Tag Manager plugin shines. It unlocks the power of the dataLayer so you can easily set macros and firing rules on almost any element.
+This is where the Metronet Tag Manager plugin shines. It really unlocks the power of the dataLayer so you can easily set macros and firing rules on almost any element.
 
 This plugin lets you:
 <ul>
-<li>Easily add as many dataLayer variables per-post and per-page basis as needed.</li>
-<li>The plugin already gives you predefined dataLayer variables you can change/remove or test the system with. These will be loaded on all pages and posts. Built-in placeholders include: %post_title%, %author_name%, %wordcount%, %logged_in%, %page_id%, %post_date%, %post_type%, %category%, %tags%, %post_id%, %permalink%, and %language%.</li>
-<li>Set up separate dataLayer variables for pages that aren’t posts or pages (like archives, etc).</li>
+<li>Easily add as many dataLayer variables on a per-post and per-page basis as you need.</li>
+<li>The plugin already gives you predefined dataLayer variables that you can change/remove or test the system with. These will be loaded on all pages and posts. Built-in placeholders include: %post_title%, %author_name%, %wordcount%, %logged_in%, %page_id%, %post_date%, %post_type%, %category%, %tags%, %post_id%, %permalink%, and %language%.</li>
+<li>Set up separate dataLayer variables for pages that aren't posts or pages (like archives, etc).</li>
 <li>Lets you easily add an HTML event handler to any content link with the GTM TinyMCE button in the WYSIWYG.</li>
 <li>Lets you add your unique ID or a class to each content link with the GTM TinyMCE button in the WYSIWYG.</li>
 <li>Google Consent Mode v2 support — output default consent states before the GTM snippet for EU compliance.</li>
 <li>Export and import all plugin settings as JSON for easy migration between sites.</li>
 <li>Conditionally exclude GTM from logged-in users or mobile devices.</li>
 <li>Enable GTM output on the WordPress login page.</li>
-<li>Gutenberg block <code>metronettagmanager/datalayer-push</code> for adding inline dataLayer push buttons in the block editor.</li>
+<li>Full Gutenberg / block editor support — use the <code>metronettagmanager/datalayer-push</code> block to add inline dataLayer push buttons to any section of your block-based content.</li>
 </ul>
 
-Please note that for this plugin to work, a slight customization is needed. WordPress doesn’t let you load scripts straight after the opening <body> tag, where the GTM script needs to be placed to work correctly. To fix this, you need to add `<?php do_action( 'body_open' ); ?>` just after the `<body>` tag, and that’s it.
+= Gutenberg / Block Editor Support =
+
+Metronet Tag Manager has full support for the WordPress block editor (Gutenberg). This integration lets you add dataLayer push events directly within individual sections of your content — no custom code required.
+
+Using the built-in <code>metronettagmanager/datalayer-push</code> block, you can:
+<ul>
+<li>Insert a dataLayer push button anywhere in the block editor.</li>
+<li>Configure the event name, key, and value directly in the block inspector panel — right alongside the section you want to track.</li>
+<li>Target individual content sections, so different parts of a page can fire completely different GTM events.</li>
+<li>Render a fully functional frontend button that fires <code>dataLayer.push()</code> on click, with no template edits needed.</li>
+</ul>
+
+This makes it easy to track user interactions at the section level — exactly where they happen in your content, not just on the page as a whole.
+
+Please note that for this plugin to work, a slight customization is needed. WordPress doesn't let you load scripts straight after the opening `<body>` tag, which is where the GTM script needs to be placed to work correctly. To fix this, you need to add `<?php do_action( 'body_open' ); ?>` just after the `<body>` tag, and that's it.
 
 > Note, If you are using WordPress 5.2. and up, contact your theme developer and ask them to insert `<?php wp_body_open(); ?>` just after the opening body tag of their theme. Here is some code to <a href="https://gist.github.com/ronalfy/6b7f43e70e644320aba67d1876a0aeff">show the theme developer to make it compatible with Metronet Tag Manager</a>.
 
+Metronet Tag Manager is developed and maintained by <a href="https://wpmetronet.com/">WP Metronet</a> and <a href="https://ruskinconsulting.com/">Ruskin Consulting</a>.
+
 Please let us know if you have any feature requests or issues with this plugin.
 
-Below are a couple of resources you might find valuable if you are new to Google Tag Manager
+Below are a couple of resources you might find valuable if you are new to Google Tag Manager:
 
 Official Google Tag Manager website
 <a href="https://developers.google.com/tag-manager/">https://developers.google.com/tag-manager/</a>
 
-Tracking Google Analytics Events with Google Tag Manager
+Tracking PDF Downloads with Tag Manager on WordPress
 <a href="https://wpmetronet.com/how-to-track-pdf-downloads-with-tag-manager-on-wordpress/">https://wpmetronet.com/how-to-track-pdf-downloads-with-tag-manager-on-wordpress/</a>
 
-Make Analytics Better with Tag Management and a Data Layer
+The Benefits of Using a Tag Manager Plugin on WordPress
 <a href="https://wpmetronet.com/the-benefits-of-using-a-tag-manager-plugin-on-wordpress/">https://wpmetronet.com/the-benefits-of-using-a-tag-manager-plugin-on-wordpress/</a>
 
 == Installation ==
@@ -58,7 +74,7 @@ Make Analytics Better with Tag Management and a Data Layer
 
 > <strong>Note</strong>: if you are using WordPress 5.2. and up, contact your theme developer and ask them to insert `<?php wp_body_open(); ?>` just after the opening body tag of their theme. Here is some code to <a href="https://gist.github.com/ronalfy/6b7f43e70e644320aba67d1876a0aeff">show the theme developer to make it compatible with Metronet Tag Manager</a>.
 
-For custom values, <a href="https://github.com/ronalfy/metronet-tag-manager#filtering-variables">please see the filters section on GitHub</a>.
+For custom values, <a href="https://github.com/WPMetronet/metronet-tag-manager#filtering-variables">please see the filters section on GitHub</a>.
 
 == Frequently Asked Questions ==
 
@@ -83,7 +99,7 @@ Yes. For custom values, <a href="https://github.com/WPMetronet/metronet-tag-mana
 1. Google Tag Manager account dashboard
 2. Google Tag Manager Workspace
 3. Recommended Google Tag Manager snippet
-3. Google Tag Manager snippet inside the plugin
+4. Google Tag Manager snippet inside the plugin
 
 == Changelog ==
 
