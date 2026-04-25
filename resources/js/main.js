@@ -1,4 +1,5 @@
 const { PanelBody, PanelRow, TextControl, Popover, Button, CheckboxControl, withSpokenMessages } = wp.components;
+const { registerBlockType } = wp.blocks;
 const { __, _x } = wp.i18n;
 const {registerFormatType, getActiveFormat, applyFormat, toggleFormat, removeFormat } = window.wp.richText;
 const { Fragment, Component } = wp.element;
@@ -336,4 +337,60 @@ registerFormatType( 'mtm/link', {
             )
         }
     } )
+} );
+
+// Standalone dataLayer push block
+registerBlockType( 'metronettagmanager/datalayer-push', {
+    title: __( 'DataLayer Push Button', 'metronet-tag-manager' ),
+    icon: 'button',
+    category: 'widgets',
+    attributes: {
+        buttonText: { type: 'string', default: 'Click Me' },
+        eventName:  { type: 'string', default: 'mtm_event' },
+        eventKey:   { type: 'string', default: 'event' },
+        eventValue: { type: 'string', default: '' },
+    },
+    edit: function( props ) {
+        const { attributes, setAttributes } = props;
+        return (
+            <Fragment>
+                <InspectorControls>
+                    <PanelBody title={ __( 'DataLayer Push Settings', 'metronet-tag-manager' ) }>
+                        <TextControl
+                            label={ __( 'Button Text', 'metronet-tag-manager' ) }
+                            value={ attributes.buttonText }
+                            onChange={ ( val ) => setAttributes( { buttonText: val } ) }
+                        />
+                        <TextControl
+                            label={ __( 'Event Name', 'metronet-tag-manager' ) }
+                            value={ attributes.eventName }
+                            onChange={ ( val ) => setAttributes( { eventName: val } ) }
+                        />
+                        <TextControl
+                            label={ __( 'Extra Key', 'metronet-tag-manager' ) }
+                            value={ attributes.eventKey }
+                            onChange={ ( val ) => setAttributes( { eventKey: val } ) }
+                        />
+                        <TextControl
+                            label={ __( 'Extra Value', 'metronet-tag-manager' ) }
+                            value={ attributes.eventValue }
+                            onChange={ ( val ) => setAttributes( { eventValue: val } ) }
+                        />
+                    </PanelBody>
+                </InspectorControls>
+                <button className="mtm-datalayer-push">
+                    { attributes.buttonText || __( 'Click Me', 'metronet-tag-manager' ) }
+                </button>
+            </Fragment>
+        );
+    },
+    save: function( props ) {
+        const { attributes } = props;
+        const onclick = `dataLayer.push({'event':'${attributes.eventName}','${attributes.eventKey}':'${attributes.eventValue}'})`;
+        return (
+            <button className="mtm-datalayer-push" onclick={ onclick }>
+                { attributes.buttonText }
+            </button>
+        );
+    },
 } );
