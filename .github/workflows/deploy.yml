@@ -16,4 +16,4 @@ jobs:
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: your-plugin-slug  # Only needed if it differs from your repo name
+          SLUG: metronet-tag-manager  # Only needed if it differs from your repo name
